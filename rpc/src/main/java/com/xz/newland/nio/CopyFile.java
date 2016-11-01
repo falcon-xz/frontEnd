@@ -8,10 +8,10 @@ import java.nio.channels.FileChannel;
 /**
  * falcon -- 2016/10/31.
  */
-public class MyChannel {
+public class CopyFile {
     public static void main(String[] args) {
         try {
-            String path  = MyChannel.class.getClassLoader().getResource("nio/5.sws").getPath() ;
+            String path  = CopyFile.class.getClassLoader().getResource("nio/5.sws").getPath() ;
             File file = new File(path) ;
             FileInputStream fis = new FileInputStream(file) ;
             FileChannel FileChannel = fis.getChannel() ;
