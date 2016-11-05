@@ -1,4 +1,4 @@
-package com.xz.newland.rpc.echoNIO.server.rpc;
+package com.xz.newland.rpc.echoNIO_v2.rpc;
 
 import com.xz.newland.rpc.v1.server.rpc.RpcCenter;
 import com.xz.newland.rpc.v1.server.rpc.RpcInvocationReq;

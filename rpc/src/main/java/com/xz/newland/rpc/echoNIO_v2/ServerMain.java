@@ -1,6 +1,6 @@
-package com.xz.newland.rpc.echoNIO;
+package com.xz.newland.rpc.echoNIO_v2;
 
-import com.xz.newland.rpc.echoNIO.server.rpc.RpcServer;
+import com.xz.newland.rpc.echoNIO_v2.rpc.RpcServer;
 
 import java.io.IOException;
 

@@ -26,8 +26,8 @@ public class CopyFile {
             long fileSize = inFileChannel.transferTo(0,inFileChannel.size(),outFileChannel) ;
             int bbSize = 10 ;
             ByteBuffer bb = ByteBuffer.allocate(bbSize) ;
+            //阻塞式的 可以用==-1判断是否读取完毕
             while (inFileChannel.read(bb)!=-1){
-                System.out.println(inFileChannel.read(bb));
                 outFileChannel.write(bb) ;
                 bb.clear();
             }
