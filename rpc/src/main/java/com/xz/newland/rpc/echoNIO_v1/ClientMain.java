@@ -1,6 +1,4 @@
-package com.xz.newland.rpc.echoNI_v1;
-
-import com.xz.newland.rpc.echoNI_v1.Config;
+package com.xz.newland.rpc.echoNIO_v1;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
