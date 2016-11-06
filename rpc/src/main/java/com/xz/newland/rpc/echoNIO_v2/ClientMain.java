@@ -1,7 +1,4 @@
-package com.xz.newland.rpc.echoNIO_v2.client;
-
-import com.xz.newland.rpc.echoNIO_v2.ByteBufferUtil;
-import com.xz.newland.rpc.echoNIO_v2.Config;
+package com.xz.newland.rpc.echoNIO_v2;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -29,6 +26,7 @@ public class ClientMain {
                 selector.select();
                 // 获得selector中选中的项的迭代器
                 Iterator<SelectionKey> it = selector.selectedKeys().iterator();
+                System.out.println("--轮询--");
                 while (it.hasNext()) {
                     SelectionKey key = it.next();
                     // 删除已选的key,以防重复处理
@@ -51,17 +49,19 @@ public class ClientMain {
                         ByteBuffer bb = (ByteBuffer)key.attachment() ;
                         bb.clear();
                         bb.put("abcd".getBytes()) ;
+                        bb.flip();
                         channel.write(bb);
                         channel.register(selector,SelectionKey.OP_READ,bb);
-                        System.out.println("isWritable:"+ ByteBufferUtil.toString(bb));
                     }else if (key.isReadable()){
                         System.out.println("------isReadable");
                         SocketChannel channel = (SocketChannel) key.channel();
                         ByteBuffer bb = (ByteBuffer)key.attachment() ;
                         bb.clear() ;
-                        bb.flip() ;
-                        channel.read(bb) ;
-                        System.out.println("isReadable:"+ ByteBufferUtil.toString(bb));
+                        int readNum = channel.read(bb);
+                        if (readNum > 0) {
+                            String receiveText = new String( bb.array(),0,readNum);
+                            System.out.println("服务器端接受客户端数据--:"+receiveText);
+                        }
                     }
 
                 }
