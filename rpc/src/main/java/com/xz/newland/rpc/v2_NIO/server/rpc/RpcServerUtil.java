@@ -1,22 +1,23 @@
-package com.xz.newland.rpc.v1.server.rpc;
+package com.xz.newland.rpc.v2_NIO.server.rpc;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * Created by root on 2016/10/27.
- */
 public class RpcServerUtil {
 
-    public static RpcInvocationRes getResponse (RpcInvocationReq rpcInvocationReq,RpcCenter rpcCenter) {
+    public static RpcInvocationRes getResponse (RpcInvocationReq rpcInvocationReq, RpcCenter rpcCenter) {
         //需要反射的类对象
         RpcInvocationRes rpcInvocationRes = null;
+        if (rpcInvocationReq==null){
+            return null ;
+        }
         try {
-            Class cz = rpcInvocationReq.getInterFace() ;
+            Class<?> cz = rpcInvocationReq.getInterFace() ;
             //对应的实例
             Object obj = rpcCenter.refer(cz.getName()) ;
             Method method = cz.getMethod(rpcInvocationReq.getMethodName(),rpcInvocationReq.getParamsType()) ;
-            rpcInvocationRes = new RpcInvocationRes(method.invoke(obj,rpcInvocationReq.getParams()));
+            Object ret = method.invoke(obj,rpcInvocationReq.getParams());
+            rpcInvocationRes = new RpcInvocationRes(ret);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
             rpcInvocationRes = new RpcInvocationRes(e);

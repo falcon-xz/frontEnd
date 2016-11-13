@@ -11,7 +11,7 @@ import java.util.Iterator;
 /**
  * Created by root on 2016/10/27.
  */
-public class ClientMain {
+class ClientMain {
     public static void main(String[] args) {
         try {
             int size = 1024 ;

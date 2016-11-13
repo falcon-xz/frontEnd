@@ -1,12 +1,12 @@
-package com.xz.newland.rpc.v1.client;
+package com.xz.newland.rpc.v1_IO.client;
 
-import com.xz.newland.rpc.v1.client.proxy.RpcProxy;
-import com.xz.newland.rpc.v1.server.interfaces.Animal;
+import com.xz.newland.rpc.v1_IO.client.proxy.RpcProxy;
+import com.xz.newland.rpc.v1_IO.server.interfaces.Animal;
 
 /**
  * Created by root on 2016/10/27.
  */
-public class ClientMain {
+class ClientMain {
     public static void main(String[] args) {
         Animal animal = RpcProxy.getProxy(Animal.class) ;
         System.out.println(animal.jiao());

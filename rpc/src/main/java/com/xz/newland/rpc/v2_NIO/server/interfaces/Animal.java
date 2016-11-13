@@ -1,4 +1,4 @@
-package com.xz.newland.rpc.v1.server.interfaces;
+package com.xz.newland.rpc.v2_NIO.server.interfaces;
 
 /**
  * Created by xz on 2016/10/26.

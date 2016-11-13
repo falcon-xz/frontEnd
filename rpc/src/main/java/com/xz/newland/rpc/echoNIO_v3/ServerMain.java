@@ -1,4 +1,4 @@
-package com.xz.newland.rpc.echoNIO_v1;
+package com.xz.newland.rpc.echoNIO_v3;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -7,22 +7,21 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.util.Date;
 import java.util.Iterator;
 
 /**
- *
  * Created by xz on 2016/10/26.
  */
 class ServerMain {
     private Selector selector;
+    private ServerSocketChannel serverSocketChannel;
     private int count = 0 ;
-    private int size = 1024 ;
-    private ByteBuffer readBuffer = ByteBuffer.allocate(size) ;
-    private ByteBuffer sendBuffer = ByteBuffer.allocate(size) ;
+    private Echo echo = null ;
 
     public ServerMain() throws IOException {
         //serverSocket通道
-        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+        serverSocketChannel = ServerSocketChannel.open();
         //设置为非阻塞
         serverSocketChannel.configureBlocking(false);
         //绑定IP PORT
@@ -53,26 +52,32 @@ class ServerMain {
                         SocketChannel socketChannel = server.accept();
                         socketChannel.configureBlocking(false);
                         // SelectionKey 有且只能关联一个对象 关联 ByteBuffer
-                        socketChannel.register(selector, SelectionKey.OP_READ);
+                        ByteBuffer bb = ByteBuffer.allocate(1024) ;
+                        socketChannel.register(selector, SelectionKey.OP_READ,bb);
                     } else if (key.isReadable()) {
                         System.out.println("------isReadable");
                         // 服务器可读取消息:得到事件发生的Socket通道
                         SocketChannel socketChannel = (SocketChannel) key.channel();
-                        readBuffer.clear() ;
-                        int readNum = socketChannel.read(readBuffer);
+                        ByteBuffer bb = (ByteBuffer) key.attachment();
+                        bb.clear();
+                        int readNum = socketChannel.read(bb);
                         if (readNum > 0) {
-                            String receiveText = new String( readBuffer.array(),0,readNum);
-                            System.out.println("服务器端接受客户端数据--:"+receiveText);
-                            socketChannel.register(selector, SelectionKey.OP_WRITE);
+                            echo = (Echo) Config.bytes2Object(bb.array()) ;
+                            System.out.println("服务器端接受客户端数据--:"+echo.toString());
+                            socketChannel.register(selector, SelectionKey.OP_WRITE,bb);
                         }
                     } else if (key.isWritable()) {
                         System.out.println("------isWritable");
                         SocketChannel socketChannel = (SocketChannel) key.channel();
-                        sendBuffer.clear();
-                        sendBuffer.put(ByteBuffer.wrap((count++ +"server").getBytes())) ;
-                        sendBuffer.flip();
-                        socketChannel.write(sendBuffer);
-                        socketChannel.register(selector, SelectionKey.OP_READ);
+                        ByteBuffer bb = (ByteBuffer) key.attachment();
+                        bb.clear();
+                        echo.setDate(new Date());
+                        bb.put(Config.object2Bytes(echo)) ;
+                        bb.flip();
+                        socketChannel.write(bb);
+                        if (bb.remaining() == 0) {
+                            socketChannel.register(selector, SelectionKey.OP_READ,bb);
+                        }
                     }
 
                 }

@@ -12,7 +12,7 @@ import java.util.Iterator;
 /**
  * Created by xz on 2016/10/26.
  */
-public class ServerMain {
+class ServerMain {
     private Selector selector;
     private ServerSocketChannel serverSocketChannel;
     private int count = 0 ;

@@ -1,4 +1,4 @@
-package com.xz.newland.rpc.v1;
+package com.xz.newland.rpc.v1_IO;
 
 /**
  * Created by xz on 2016/10/26.

@@ -1,4 +1,4 @@
-package com.xz.newland.rpc.echoNIO_v2;
+package com.xz.newland.rpc.echoNIO_v3;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -8,25 +8,30 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
-/**
- * Created by root on 2016/10/27.
- */
-class ClientMain {
-    public static void main(String[] args) {
-        try {
-            SocketChannel socketChannel = SocketChannel.open();
-            socketChannel.configureBlocking(false);
-            //通道管理器
-            Selector selector = Selector.open();
-            socketChannel.connect(new InetSocketAddress(Config.IP, Config.PORT));
-            socketChannel.register(selector, SelectionKey.OP_CONNECT);
 
-            //轮询监听
-            while (true) {
+class ClientMain implements Runnable {
+    private Selector selector ;
+    private boolean running ;
+
+
+    public ClientMain() throws IOException{
+        selector = Selector.open();
+        SocketChannel socketChannel = SocketChannel.open();
+        socketChannel.configureBlocking(false);
+        socketChannel.connect(new InetSocketAddress(Config.IP, Config.PORT));
+
+        int bufferSize = 1024 ;
+        ByteBuffer byteBuffer = ByteBuffer.allocate(bufferSize) ;
+        //使用 SelectionKey 的附加对象方式
+        socketChannel.register(selector, SelectionKey.OP_CONNECT,byteBuffer);
+        running = true ;
+    }
+    @Override
+    public void run() {
+        while (running){
+            try {
                 selector.select();
-                // 获得selector中选中的项的迭代器
                 Iterator<SelectionKey> it = selector.selectedKeys().iterator();
-                System.out.println("--轮询--");
                 while (it.hasNext()) {
                     SelectionKey key = it.next();
                     // 删除已选的key,以防重复处理
@@ -39,7 +44,7 @@ class ClientMain {
                             channel.finishConnect();
                         }
                         channel.configureBlocking(false);
-                        ByteBuffer bb = ByteBuffer.allocate(1024) ;
+                        ByteBuffer bb = (ByteBuffer)key.attachment() ;
                         // SelectionKey 关联 ByteBuffer
                         channel.register(selector,SelectionKey.OP_WRITE,bb);
                     }else if (key.isWritable()){
@@ -48,7 +53,9 @@ class ClientMain {
                                 .channel();
                         ByteBuffer bb = (ByteBuffer)key.attachment() ;
                         bb.clear();
-                        bb.put("abcd".getBytes()) ;
+                        Echo echo = new Echo() ;
+                        echo.setName("xz");
+                        bb.put(Config.object2Bytes(echo)) ;
                         bb.flip();
                         channel.write(bb);
                         channel.register(selector,SelectionKey.OP_READ,bb);
@@ -59,18 +66,29 @@ class ClientMain {
                         bb.clear() ;
                         int readNum = channel.read(bb);
                         if (readNum > 0) {
-                            String receiveText = new String( bb.array(),0,readNum);
-                            System.out.println("服务器端接受客户端数据--:"+receiveText);
-                            //channel.register(selector,SelectionKey.OP_WRITE,bb);
+                            Echo echo = (Echo)Config.bytes2Object(bb.array()) ;
+                            System.out.println("服务器端接受客户端数据--:"+echo.toString());
+                            running=false ;
                         }
                     }
-
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
+    }
+
+    public static void main(String[] args) {
+        try {
+            for (int i = 0; i <1 ; i++) {
+                ClientMain ClientMain = new ClientMain() ;
+                new Thread(ClientMain).start();
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }

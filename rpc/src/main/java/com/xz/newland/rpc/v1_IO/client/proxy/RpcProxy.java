@@ -1,4 +1,4 @@
-package com.xz.newland.rpc.v1.client.proxy;
+package com.xz.newland.rpc.v1_IO.client.proxy;
 
 import java.lang.reflect.Proxy;
 

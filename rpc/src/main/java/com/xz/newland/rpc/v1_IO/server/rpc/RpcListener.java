@@ -1,4 +1,4 @@
-package com.xz.newland.rpc.v1.server.rpc;
+package com.xz.newland.rpc.v1_IO.server.rpc;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -8,7 +8,7 @@ import java.net.Socket;
 /**
  * Created by xz on 2016/10/26.
  */
-public class RpcListener implements Runnable {
+class RpcListener implements Runnable {
     private RpcCenter rpcCenter ;
     private Socket socket ;
     private ObjectInputStream ois ;
