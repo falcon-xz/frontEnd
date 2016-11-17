@@ -1,4 +1,4 @@
-package com.xz.newland.future;
+package com.xz.newland.baseknow.future;
 
 import java.util.Random;
 import java.util.concurrent.Callable;

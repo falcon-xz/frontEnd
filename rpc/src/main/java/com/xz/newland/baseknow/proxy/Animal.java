@@ -1,4 +1,4 @@
-package com.xz.newland.proxy;
+package com.xz.newland.baseknow.proxy;
 
 /**
  * falcon -- 2016/11/13.

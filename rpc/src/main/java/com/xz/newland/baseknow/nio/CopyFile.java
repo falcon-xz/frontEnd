@@ -1,4 +1,4 @@
-package com.xz.newland.nio;
+package com.xz.newland.baseknow.nio;
 
 import java.io.*;
 import java.nio.ByteBuffer;

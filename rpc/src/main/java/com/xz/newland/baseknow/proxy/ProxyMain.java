@@ -1,4 +1,4 @@
-package com.xz.newland.proxy;
+package com.xz.newland.baseknow.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
