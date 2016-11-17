@@ -1,10 +1,17 @@
 package com.xz.newland.baseknow.concurrent;
 
 import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * falcon -- 2016/11/17.
+ * 使用 Lock+Condition 组合方式 实现 synchronized锁
+ *  Condition.await() = synchronized 方法 中this.wait() = synchronized(Object)中 obj.wait()
+ *  Condition.signal() = synchronized 方法 中this.notify() = synchronized(Object)中 obj.notify()
+ *
+ *  使用 Lock+Condition 组合方式 可以为多个线程建立同步机制 见 ArrayBlockingQueue
+ *
  */
 public class ReentrantLockTest implements Runnable {
 
@@ -20,7 +27,7 @@ public class ReentrantLockTest implements Runnable {
     @Override
     public void run() {
         int i = 0;
-        while (i < 200) {
+        while (i < 50) {
             if (type) {
                 reentrantLockNum.jia();
             } else {
@@ -44,9 +51,9 @@ public class ReentrantLockTest implements Runnable {
     }
 
     static class ReentrantLockNum {
-        private ReentrantLock reentrantLock = new ReentrantLock();
-        private Condition condition1 = reentrantLock.newCondition() ;
-        private Condition condition2 = reentrantLock.newCondition() ;
+        private Lock reentrantLock = new ReentrantLock();
+        private Condition jiaCondition = reentrantLock.newCondition() ;
+        private Condition jianCondition = reentrantLock.newCondition() ;
         int num = 0;
 
         void jia() {
@@ -55,12 +62,12 @@ public class ReentrantLockTest implements Runnable {
                 try {
                     while (num == 20) {
                         try {
-                            condition1.await();
+                            jiaCondition.await();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
-                    condition1.signal();
+                    jianCondition.signal();
                     num++;
                     System.out.println(Thread.currentThread().getName() + "--jia:" + num);
                 } finally {
@@ -79,12 +86,12 @@ public class ReentrantLockTest implements Runnable {
                 try {
                     while (num == 0) {
                         try {
-                            condition2.await();
+                            jianCondition.await();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
-                    condition2.signal();
+                    jiaCondition.signal();
                     num--;
                     System.out.println(Thread.currentThread().getName() + "--jian:" + num);
                 } finally {
