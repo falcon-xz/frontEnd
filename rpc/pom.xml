@@ -12,14 +12,34 @@
     <artifactId>rpc</artifactId>
     <properties>
         <netty-version>4.1.6.Final</netty-version>
+        <protostuff-version>1.0.12</protostuff-version>
     </properties>
     <dependencies>
+        <!-- netty start -->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>${netty-version}</version>
         </dependency>
+        <!-- netty end -->
 
+        <!-- Protostuff -->
+        <dependency>
+            <groupId>com.dyuproject.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>${protostuff-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dyuproject.protostuff</groupId>
+            <artifactId>protostuff-api</artifactId>
+            <version>${protostuff-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dyuproject.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+            <version>${protostuff-version}</version>
+        </dependency>
+        <!-- Protostuff -->
     </dependencies>
 
 </project>
