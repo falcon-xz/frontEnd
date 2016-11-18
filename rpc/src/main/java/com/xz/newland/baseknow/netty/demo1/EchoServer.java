@@ -24,10 +24,10 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 /**
  * Discards any incoming data.
  */
-public final class DiscardServer {
+public final class EchoServer {
 
     private int port ;
-    public DiscardServer(int port){
+    public EchoServer(int port){
         this.port = port ;
     }
     public void run(){
@@ -39,7 +39,7 @@ public final class DiscardServer {
                 .childHandler(new ChannelInitializer<SocketChannel>(){
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        socketChannel.pipeline().addLast(new DiscardServerHandler());
+                        socketChannel.pipeline().addLast(new EchoServerHandler());
                     }
                 }).option(ChannelOption.SO_BACKLOG, 128)
                 .childOption(ChannelOption.SO_KEEPALIVE, true);
@@ -72,6 +72,6 @@ public final class DiscardServer {
         } else {
             port = 8080;
         }
-        new DiscardServer(port).run();
+        new EchoServer(port).run();
     }
 }

@@ -25,15 +25,13 @@ import java.nio.charset.Charset;
 /**
  * Handles a server-side channel.
  */
-public class DiscardServerHandler extends SimpleChannelInboundHandler<Object> {
+public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, String msg) throws Exception {
         System.out.println("------channelRead0--------");
-        ((ByteBuf) msg).release();
     }
 
-    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         System.out.println("------channelRead--------");
         ByteBuf in = (ByteBuf) msg;
@@ -41,17 +39,26 @@ public class DiscardServerHandler extends SimpleChannelInboundHandler<Object> {
             if (in.isReadable()) {
                 String s = "server receive:"+in.toString(Charset.forName("utf-8")) ;
                 System.out.print(s);
-                ctx.writeAndFlush(s) ;
+                ByteBuf out = ctx.alloc().buffer(4) ;
+                out.writeCharSequence(s, Charset.forName("utf-8")) ;
+                ctx.write(out) ;
             }
         } finally {
-            ReferenceCountUtil.release(msg); // (2)
+            ReferenceCountUtil.release(msg);
+
         }
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        super.channelReadComplete(ctx);
+        System.out.println("------channelReadComplete--------");
+        ctx.flush();
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         System.out.println("------exceptionCaught--------");
-        cause.printStackTrace();
         ctx.close();
     }
 }
