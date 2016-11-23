@@ -12,8 +12,15 @@
     <url>http://maven.apache.org</url>
     <properties>
         <jersey.version>1.18</jersey.version>
+        <jetty-version>7.6.7.v20120910</jetty-version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.xz.newland</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!-- jersey start -->
         <dependency>
             <groupId>com.sun.jersey</groupId>
@@ -51,6 +58,41 @@
             <version>${jersey.version}</version>
         </dependency>
         <!-- jersey end -->
+
+        <!-- jetty start -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-security</artifactId>
+            <version>${jetty-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>${jetty-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>${jetty-version}</version>
+        </dependency>
+        <!-- jetty end -->
+        <!-- jetty jsp support start -->
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jsp-2.1-glassfish</artifactId>
+            <version>2.1.v20100127</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>servlet-api-2.5</artifactId>
+            <version>6.1.14</version>
+        </dependency>
+        <!-- jetty jsp support end -->
     </dependencies>
     <build>
         <finalName>rest</finalName>

@@ -13,6 +13,7 @@
     <properties>
         <netty-version>4.1.6.Final</netty-version>
         <protostuff-version>1.0.12</protostuff-version>
+        <thrift-version>0.9.3</thrift-version>
     </properties>
     <dependencies>
         <!-- netty start -->
@@ -40,6 +41,14 @@
             <version>${protostuff-version}</version>
         </dependency>
         <!-- Protostuff -->
+
+        <!-- thrift -->
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>${thrift-version}</version>
+        </dependency>
+        <!-- thrift -->
     </dependencies>
 
 </project>

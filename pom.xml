@@ -65,5 +65,6 @@
         <module>rpc</module>
         <module>designMode</module>
         <module>rest</module>
+        <module>common</module>
     </modules>
 </project>

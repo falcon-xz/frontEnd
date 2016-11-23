@@ -22,12 +22,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="common" />
         <module name="designMode" />
         <module name="rest" />
         <module name="rpc" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="common" target="1.7" />
       <module name="designMode" target="1.7" />
       <module name="fontEnd" target="1.7" />
       <module name="jersey" target="1.5" />
