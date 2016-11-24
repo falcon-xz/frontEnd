@@ -1,0 +1,48 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+
+
+  <servlet>
+    <servlet-name>StudentServlet</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <init-param>
+      <!--设置REST资源所在的包(可选)-->
+      <param-name>com.sun.jersey.config.property.packages</param-name>
+      <param-value>com.xz.jersey.resource</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StudentServlet</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+
+
+
+  <servlet>
+    <servlet-name>MyServletWithXML</servlet-name>
+    <servlet-class>com.xz.jetty.servlet.MyServletWithXML</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MyServletWithXML</servlet-name>
+    <url-pattern>/MyServletWithXML.do</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>Character</filter-name>
+    <filter-class>com.xz.jetty.filter.MyFilter</filter-class>
+    <init-param>
+      <param-name>character</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>Character</filter-name>
+    <url-pattern>*</url-pattern>
+  </filter-mapping>
+
+
+</web-app>
