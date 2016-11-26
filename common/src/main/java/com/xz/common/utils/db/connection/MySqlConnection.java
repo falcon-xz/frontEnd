@@ -1,8 +1,8 @@
-package com.xz.frontEnd.utils.db.connection;
+package com.xz.common.utils.db.connection;
 
-import com.xz.frontEnd.utils.db.DBUtil;
-import com.xz.frontEnd.utils.db.factory.DBCenter;
-import com.xz.frontEnd.utils.db.factory.po.DBConfig;
+import com.xz.common.utils.db.DBUtil;
+import com.xz.common.utils.db.factory.DBCenter;
+import com.xz.common.utils.db.factory.po.DBConfig;
 
 import java.sql.*;
 import java.util.Map;

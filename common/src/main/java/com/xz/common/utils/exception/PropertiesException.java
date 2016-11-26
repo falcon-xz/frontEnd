@@ -1,4 +1,4 @@
-package com.xz.frontEnd.utils.exception;
+package com.xz.common.utils.exception;
 
 import java.io.IOException;
 

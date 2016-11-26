@@ -1,6 +1,6 @@
-package com.xz.frontEnd.utils.db.factory;
+package com.xz.common.utils.db.factory;
 
-import com.xz.frontEnd.utils.db.factory.po.DBConfig;
+import com.xz.common.utils.db.factory.po.DBConfig;
 
 import java.sql.Connection;
 import java.util.Map;

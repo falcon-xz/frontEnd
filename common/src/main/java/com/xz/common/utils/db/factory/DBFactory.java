@@ -1,8 +1,8 @@
-package com.xz.frontEnd.utils.db.factory;
+package com.xz.common.utils.db.factory;
 
-import com.xz.frontEnd.utils.PropertiesUtil;
-import com.xz.frontEnd.utils.db.exception.DBParseException;
-import com.xz.frontEnd.utils.db.factory.po.DBConfig;
+import com.xz.common.utils.PropertiesUtil;
+import com.xz.common.utils.db.exception.DBParseException;
+import com.xz.common.utils.db.factory.po.DBConfig;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -1,4 +1,4 @@
-package com.xz.frontEnd.utils;
+package com.xz.common.utils;
 
 import java.net.*;
 import java.util.ArrayList;

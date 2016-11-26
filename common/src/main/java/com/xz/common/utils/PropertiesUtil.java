@@ -1,6 +1,6 @@
-package com.xz.frontEnd.utils;
+package com.xz.common.utils;
 
-import com.xz.frontEnd.utils.exception.PropertiesException;
+import com.xz.common.utils.exception.PropertiesException;
 
 import java.io.IOException;
 import java.io.InputStream;

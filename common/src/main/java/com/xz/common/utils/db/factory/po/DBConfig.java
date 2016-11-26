@@ -1,4 +1,4 @@
-package com.xz.frontEnd.utils.db.factory.po;
+package com.xz.common.utils.db.factory.po;
 
 /**
  * falcon -- 2016/11/24.

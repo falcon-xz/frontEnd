@@ -1,4 +1,4 @@
-package com.xz.frontEnd.utils.db.exception;
+package com.xz.common.utils.db.exception;
 
 import java.sql.SQLException;
 

@@ -1,4 +1,4 @@
-package com.xz.newland.baseknow.thread.demo1;
+package com.xz.newland.baseknow.thread.normal;
 
 /**
  * falcon -- 2016/11/24.
