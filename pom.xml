@@ -53,5 +53,7 @@
         <module>designMode</module>
         <module>rest</module>
         <module>common</module>
+        <module>worm</module>
+        <module>io</module>
     </modules>
 </project>

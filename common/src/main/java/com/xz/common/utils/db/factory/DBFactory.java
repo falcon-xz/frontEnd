@@ -17,14 +17,13 @@ public class DBFactory {
     private static DBFactory dbFactory = new DBFactory() ;
     private static Map<String,DBConfig> map;
     private static DBCenter dbCenter ;
-    private static String className ;
 
     private DBFactory(){
         System.out.println("初始化 DBFactory");
         String path = "db.properties" ;
         Properties config = PropertiesUtil.getProperties(path) ;
         try {
-            className = config.getProperty("databaseclass") ;
+            String className = config.getProperty("databaseclass") ;
             Class cz = Class.forName(className) ;
             Constructor constructor = cz.getConstructor(Map.class) ;
             map = DBParseUtils.parse(config) ;

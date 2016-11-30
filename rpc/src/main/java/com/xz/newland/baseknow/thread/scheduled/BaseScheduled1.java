@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * falcon -- 2016/11/25.
  */
-public class BaseScheduled implements Runnable{
+public class BaseScheduled1 implements Runnable{
     @Override
     public void run() {
         System.out.println(Thread.currentThread().getName()+"start");
@@ -21,8 +21,8 @@ public class BaseScheduled implements Runnable{
 
     public static void main(String[] args) {
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
-        BaseScheduled baseScheduled1 = new BaseScheduled() ;
-        BaseScheduled baseScheduled2 = new BaseScheduled() ;
+        BaseScheduled1 baseScheduled1 = new BaseScheduled1() ;
+        BaseScheduled1 baseScheduled2 = new BaseScheduled1() ;
         //执行间隔 按线程完成时间算
         scheduledExecutorService.scheduleWithFixedDelay(baseScheduled1,0,2, TimeUnit.SECONDS) ;
         //执行间隔 按线程开始时间算 存在并发

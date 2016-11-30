@@ -26,6 +26,7 @@
         <module name="designMode" />
         <module name="rest" />
         <module name="rpc" />
+        <module name="worm" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -35,6 +36,7 @@
       <module name="jersey" target="1.5" />
       <module name="rest" target="1.7" />
       <module name="rpc" target="1.7" />
+      <module name="worm" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
