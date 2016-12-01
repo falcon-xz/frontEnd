@@ -12,6 +12,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/io/pom.xml" />
         <option value="$PROJECT_DIR$/jersey/pom.xml" />
       </set>
     </option>

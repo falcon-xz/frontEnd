@@ -54,6 +54,6 @@
         <module>rest</module>
         <module>common</module>
         <module>worm</module>
-        <module>io</module>
+        <module>iostream</module>
     </modules>
 </project>

@@ -24,6 +24,7 @@
         <processorPath useClasspath="true" />
         <module name="common" />
         <module name="designMode" />
+        <module name="iostream" />
         <module name="rest" />
         <module name="rpc" />
         <module name="worm" />
@@ -33,6 +34,8 @@
       <module name="common" target="1.7" />
       <module name="designMode" target="1.7" />
       <module name="fontEnd" target="1.7" />
+      <module name="io" target="1.5" />
+      <module name="iostream" target="1.7" />
       <module name="jersey" target="1.5" />
       <module name="rest" target="1.7" />
       <module name="rpc" target="1.7" />

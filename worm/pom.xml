@@ -37,7 +37,7 @@
             <artifactId>webmagic-samples</artifactId>
             <version>${webmagic-version}</version>
         </dependency>
-        <dependency>
+       <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-scripts</artifactId>
             <version>${webmagic-version}</version>
@@ -48,10 +48,10 @@
             <version>${webmagic-version}</version>
         </dependency>
         <dependency>
-            <groupId>us.codecraft</groupId>
-            <artifactId>webmagic-selenium</artifactId>
-            <version>${webmagic-version}</version>
-        </dependency>-->
+           <groupId>us.codecraft</groupId>
+           <artifactId>webmagic-selenium</artifactId>
+           <version>${webmagic-version}</version>
+       </dependency>-->
 
         <dependency>
             <groupId>org.jsoup</groupId>
