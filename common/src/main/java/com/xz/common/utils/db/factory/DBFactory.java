@@ -1,6 +1,6 @@
 package com.xz.common.utils.db.factory;
 
-import com.xz.common.utils.PropertiesUtil;
+import com.xz.common.utils.properties.PropertiesUtil;
 import com.xz.common.utils.db.exception.DBParseException;
 import com.xz.common.utils.db.factory.po.DBConfig;
 

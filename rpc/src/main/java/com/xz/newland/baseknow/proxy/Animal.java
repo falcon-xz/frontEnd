@@ -3,6 +3,6 @@ package com.xz.newland.baseknow.proxy;
 /**
  * falcon -- 2016/11/13.
  */
-interface Animal {
+public interface Animal {
     String jiao(String s);
 }

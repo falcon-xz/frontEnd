@@ -1,6 +1,6 @@
 package com.xz.jetty.config;
 
-import com.xz.common.utils.PropertiesUtil;
+import com.xz.common.utils.properties.PropertiesUtil;
 
 import java.util.Properties;
 

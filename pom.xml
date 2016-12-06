@@ -34,6 +34,7 @@
     </build>
     <dependencies>
 
+        <!--单元测试 start-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -54,6 +55,6 @@
         <module>rest</module>
         <module>common</module>
         <module>worm</module>
-        <module>iostream</module>
+        <module>io</module>
     </modules>
 </project>
