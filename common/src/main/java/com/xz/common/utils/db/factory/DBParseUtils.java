@@ -1,7 +1,7 @@
 package com.xz.common.utils.db.factory;
 
 import com.xz.common.utils.db.exception.DBParseException;
-import com.xz.common.utils.db.factory.po.DBConfig;
+import com.xz.common.utils.db.factory.po.DBArgs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,24 +14,28 @@ import java.util.regex.Pattern;
 public class DBParseUtils {
     public static Pattern pattern = Pattern.compile(" ") ;
 
-    public static Map<String,DBConfig> parse(Properties properties) throws DBParseException{
-        Map<String,DBConfig> map = new HashMap<>() ;
-        String databaseNames = properties.getProperty("database") ;
+    public static Map<String,Properties> parse(Properties allProperties) throws DBParseException{
+        Map<String,Properties> map = new HashMap<>() ;
+        //获得需要使用连接池的 database
+        String databaseNames = allProperties.getProperty(DBArgs.database) ;
         String[] databases = pattern.split(databaseNames) ;
+
         for (String database:databases) {
-            String url = properties.getProperty(database+".url") ;
-            String username = properties.getProperty(database+".username") ;
-            String password = properties.getProperty(database+".password") ;
-            String maxActive = properties.getProperty(database+".maxActive","30") ;
-            String maxIdle = properties.getProperty(database+".maxActive","10") ;
-            String maxWait = properties.getProperty(database+".maxWait","3600000") ;
-            DBConfig dbConfig = new DBConfig(database,url,username,password,maxActive,maxIdle,maxWait) ;
-            map.put(database,dbConfig);
+            Properties properties = new Properties() ;
+            map.put(database,properties) ;
         }
         if (map.size()==0){
             throw new DBParseException("配置文件为空") ;
         }
+        for (Map.Entry entry:allProperties.entrySet()) {
+            String key = (String)entry.getKey() ;
+            if (key.indexOf(".")<0){
+                continue;
+            }
+            String database = key.substring(0,key.indexOf(".")) ;
+            String value = (String)entry.getValue() ;
+            map.get(database).put(key,value) ;
+        }
         return map ;
     }
-
 }

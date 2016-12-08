@@ -1,21 +1,21 @@
 package com.xz.common.utils.db.connection;
 
-import com.xz.common.utils.db.DBUtil;
 import com.xz.common.utils.db.factory.DBCenter;
-import com.xz.common.utils.db.factory.po.DBConfig;
+import com.xz.common.utils.db.factory.po.DBArgs;
 
 import java.sql.*;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * falcon -- 2016/11/24.
  */
 public class MySqlConnection extends DBCenter{
 
-    public MySqlConnection(Map<String, DBConfig> map) {
+    public MySqlConnection(Map<String, Properties> map) {
         super(map);
         try {
-            Class.forName("com.connection.jdbc.Driver") ;
+            Class.forName("com.mysql.jdbc.Driver") ;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -23,10 +23,11 @@ public class MySqlConnection extends DBCenter{
     }
     @Override
     public Connection connection(String database) {
-        DBConfig dbConfig = super.map.get(database) ;
+        Properties properties = super.map.get(database) ;
+        String databasePlus = database+"." ;
         Connection connection = null ;
         try {
-            connection = DriverManager.getConnection(dbConfig.getUrl()+dbConfig.getDatabase(),dbConfig.getUsername(),dbConfig.getPassword());
+            connection = DriverManager.getConnection(properties.getProperty(databasePlus+DBArgs.url)+database,properties.getProperty(databasePlus+DBArgs.username),properties.getProperty(databasePlus+DBArgs.password));
         } catch (SQLException e) {
             e.printStackTrace();
         }

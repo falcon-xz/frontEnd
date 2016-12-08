@@ -2,7 +2,7 @@ package com.xz.common.utils.db.factory;
 
 import com.xz.common.utils.properties.PropertiesUtil;
 import com.xz.common.utils.db.exception.DBParseException;
-import com.xz.common.utils.db.factory.po.DBConfig;
+import com.xz.common.utils.db.factory.po.DBArgs;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -15,7 +15,7 @@ import java.util.Properties;
  */
 public class DBFactory {
     private static DBFactory dbFactory = new DBFactory() ;
-    private static Map<String,DBConfig> map;
+    private static Map<String,Properties> map;
     private static DBCenter dbCenter ;
 
     private DBFactory(){

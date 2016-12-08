@@ -7,10 +7,10 @@ import java.sql.*;
 /**
  * falcon -- 2016/12/1.
  */
-public class DBTest {
+public class DBMetaTest {
     public static void main(String[] args) {
         try {
-            Connection conn = DBUtil.getConnection("ambari");
+            Connection conn = DBUtil.getConnection("test");
             DatabaseMetaData databaseMetaData = conn.getMetaData();
             ResultSet rs = databaseMetaData.getTables(null, null, null, null);
             ResultSetMetaData rsmd = rs.getMetaData();

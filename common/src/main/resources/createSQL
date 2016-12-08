@@ -1,0 +1,7 @@
+create table student(
+id int(20) PRIMARY KEY AUTO_INCREMENT,
+sex char(1),
+name varchar(20),
+birthday date,
+picture BLOB
+)ENGINE=Innodb PARTITION BY HASH(id DIV 100);
