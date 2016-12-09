@@ -95,7 +95,6 @@ public class ReadLineNIO {
         //压缩
         byteBuffer.compact();
         //设置偏移量 第一次0 第二次2 第三次4
-        System.out.println(position);
         fc.position(position);
         //读取
         fc.read(this.byteBuffer);

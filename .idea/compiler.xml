@@ -25,6 +25,7 @@
         <module name="common" />
         <module name="designMode" />
         <module name="io" />
+        <module name="other" />
         <module name="rest" />
         <module name="rpc" />
         <module name="worm" />
@@ -37,6 +38,7 @@
       <module name="io" target="1.7" />
       <module name="iostream" target="1.7" />
       <module name="jersey" target="1.5" />
+      <module name="other" target="1.7" />
       <module name="rest" target="1.7" />
       <module name="rpc" target="1.7" />
       <module name="worm" target="1.7" />

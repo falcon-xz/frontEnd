@@ -26,13 +26,5 @@ public class DBMetaTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        /*Connection conn = DBUtil.getConnection("hive");
-        PreparedStatement pstm = conn.prepareStatement("") ;
-        pstm.setBigDecimal();
-        ResultSet rs = pstm.executeQuery() ;
-        while (rs.next()){
-            rs.getBigDecimal()
-        }*/
     }
 }

@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/designMode/designMode.iml" filepath="$PROJECT_DIR$/designMode/designMode.iml" />
       <module fileurl="file://$PROJECT_DIR$/fontEnd.iml" filepath="$PROJECT_DIR$/fontEnd.iml" />
       <module fileurl="file://$PROJECT_DIR$/io/io.iml" filepath="$PROJECT_DIR$/io/io.iml" />
+      <module fileurl="file://$PROJECT_DIR$/other/other.iml" filepath="$PROJECT_DIR$/other/other.iml" />
       <module fileurl="file://$PROJECT_DIR$/rest/rest.iml" filepath="$PROJECT_DIR$/rest/rest.iml" />
       <module fileurl="file://$PROJECT_DIR$/rpc/rpc.iml" filepath="$PROJECT_DIR$/rpc/rpc.iml" />
       <module fileurl="file://$PROJECT_DIR$/worm/worm.iml" filepath="$PROJECT_DIR$/worm/worm.iml" />

@@ -56,5 +56,6 @@
         <module>common</module>
         <module>worm</module>
         <module>io</module>
+        <module>other</module>
     </modules>
 </project>
