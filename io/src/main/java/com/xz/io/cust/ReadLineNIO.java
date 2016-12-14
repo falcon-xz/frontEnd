@@ -2,10 +2,7 @@ package com.xz.io.cust;
 
 import com.google.common.base.Charsets;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
@@ -14,7 +11,7 @@ import java.nio.charset.CharsetDecoder;
 
 /**
  * falcon -- 2016/12/5.
- * 基于flume ResettableFileInputStream 改写的按行读取NIO实例
+ * 基于flume 1.6 ResettableFileInputStream 改写的按行读取NIO实例
  */
 public class ReadLineNIO {
     private Charset charset = Charsets.UTF_8;
@@ -128,14 +125,20 @@ public class ReadLineNIO {
 
     public static void main(String[] args) {
         try {
-            ReadLineNIO t = new ReadLineNIO("E:\\test\\2.txt");
-            while (true) {
-                Thread.sleep(10);
-                System.out.println("line:" + t.readLine());
+            ReadLineNIO readLineNIO = new ReadLineNIO("E:\\test\\1.txt");
+            File target = new File("E:\\test\\1_ReadLineNIO.txt") ;
+            FileWriter fileWriter = new FileWriter(target) ;
+            String line = null ;
+            long l1 = System.currentTimeMillis() ;
+            while ((line=readLineNIO.readLine())!=null) {
+                fileWriter.write(line+"\n");
             }
+            long l2 = System.currentTimeMillis() ;
+            fileWriter.flush();
+            fileWriter.close();
+            readLineNIO.release();
+            System.out.println(l2-l1);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
