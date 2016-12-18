@@ -4,7 +4,7 @@ import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
-import com.xz.rpc.rpc.netty.transion.BasePo;
+import com.xz.rpc.rpc.info.po.BasePoNoSer;
 
 /**
  * falcon -- 2016/11/22.
@@ -12,7 +12,7 @@ import com.xz.rpc.rpc.netty.transion.BasePo;
 public class ProtostuffSer implements BaseSer{
 
     @Override
-    public <T extends BasePo> byte[] serialize(T obj) {
+    public <T extends BasePoNoSer> byte[] serialize(T obj) {
         if (obj == null) {
             throw new RuntimeException("序列化对象(" + obj + ")!");
         }
@@ -31,7 +31,7 @@ public class ProtostuffSer implements BaseSer{
     }
 
     @Override
-    public <T extends BasePo> T deserialize(byte[] bytes, Class<T> targetClass) {
+    public <T extends BasePoNoSer> T deserialize(byte[] bytes, Class<T> targetClass) {
         if (bytes == null || bytes.length == 0) {
             throw new RuntimeException("反序列化对象发生异常,byte序列为空!");
         }

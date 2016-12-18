@@ -6,12 +6,12 @@ public class Dragon implements Animal {
 
 	@Override
 	public String eat() {
-		return "������";
+		return "eat";
 	}
 
 	@Override
 	public String hue() {
-		return "���";
+		return "hue";
 	}
 
 }

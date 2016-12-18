@@ -1,5 +1,7 @@
 package com.xz.rpc.rpc.nio.echoNIO_v3;
 
+import com.xz.rpc.rpc.info.po.BasePoSer;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,7 +9,7 @@ import java.util.Date;
 /**
  * falcon -- 2016/11/6.
  */
-class Echo implements Serializable {
+class Echo extends BasePoSer {
     private String name;
     private Date date;
 

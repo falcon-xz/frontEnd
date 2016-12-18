@@ -16,6 +16,12 @@
         <thrift-version>0.9.3</thrift-version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.xz.newland</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!-- netty start -->
         <dependency>
             <groupId>io.netty</groupId>
@@ -49,6 +55,7 @@
             <version>${thrift-version}</version>
         </dependency>
         <!-- thrift -->
+
     </dependencies>
 
 </project>

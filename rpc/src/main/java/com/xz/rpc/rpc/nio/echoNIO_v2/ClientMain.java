@@ -1,5 +1,7 @@
 package com.xz.rpc.rpc.nio.echoNIO_v2;
 
+import com.xz.rpc.rpc.info.Config;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -21,8 +23,9 @@ class ClientMain {
             socketChannel.connect(new InetSocketAddress(Config.IP, Config.PORT));
             socketChannel.register(selector, SelectionKey.OP_CONNECT);
 
+            boolean running = true ;
             //轮询监听
-            while (true) {
+            while (running) {
                 selector.select();
                 // 获得selector中选中的项的迭代器
                 Iterator<SelectionKey> it = selector.selectedKeys().iterator();
@@ -61,7 +64,7 @@ class ClientMain {
                         if (readNum > 0) {
                             String receiveText = new String( bb.array(),0,readNum);
                             System.out.println("服务器端接受客户端数据--:"+receiveText);
-                            //channel.register(selector,SelectionKey.OP_WRITE,bb);
+                            running = false ;
                         }
                     }
 

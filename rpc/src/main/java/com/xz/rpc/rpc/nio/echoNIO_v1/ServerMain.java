@@ -1,5 +1,7 @@
 package com.xz.rpc.rpc.nio.echoNIO_v1;
 
+import com.xz.rpc.rpc.info.Config;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;

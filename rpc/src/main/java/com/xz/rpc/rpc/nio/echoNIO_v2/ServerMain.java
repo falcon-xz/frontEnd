@@ -1,5 +1,7 @@
 package com.xz.rpc.rpc.nio.echoNIO_v2;
 
+import com.xz.rpc.rpc.info.Config;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -53,16 +55,20 @@ class ServerMain {
                         ByteBuffer bb = ByteBuffer.allocate(1024) ;
                         socketChannel.register(selector, SelectionKey.OP_READ,bb);
                     } else if (key.isReadable()) {
-                        System.out.println("------isReadable");
-                        // 服务器可读取消息:得到事件发生的Socket通道
-                        SocketChannel socketChannel = (SocketChannel) key.channel();
-                        ByteBuffer bb = (ByteBuffer) key.attachment();
-                        bb.clear();
-                        int readNum = socketChannel.read(bb);
-                        if (readNum > 0) {
-                            String receiveText = new String( bb.array(),0,readNum);
-                            System.out.println("服务器端接受客户端数据--:"+receiveText);
-                            socketChannel.register(selector, SelectionKey.OP_WRITE,bb);
+                        try {
+                            System.out.println("------isReadable");
+                            // 服务器可读取消息:得到事件发生的Socket通道
+                            SocketChannel socketChannel = (SocketChannel) key.channel();
+                            ByteBuffer bb = (ByteBuffer) key.attachment();
+                            bb.clear();
+                            int readNum = socketChannel.read(bb);
+                            if (readNum > 0) {
+                                String receiveText = new String( bb.array(),0,readNum);
+                                System.out.println("服务器端接受客户端数据--:"+receiveText);
+                                socketChannel.register(selector, SelectionKey.OP_WRITE,bb);
+                            }
+                        } catch (IOException e) {
+                            key.cancel();
                         }
                     } else if (key.isWritable()) {
                         System.out.println("------isWritable");

@@ -1,5 +1,8 @@
 package com.xz.rpc.rpc.nio.echoNIO_v3;
 
+import com.xz.rpc.rpc.info.Config;
+import com.xz.rpc.rpc.info.po.PoUtils;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -16,7 +19,6 @@ import java.util.Iterator;
 class ServerMain {
     private Selector selector;
     private ServerSocketChannel serverSocketChannel;
-    private int count = 0 ;
     private Echo echo = null ;
 
     public ServerMain() throws IOException {
@@ -55,16 +57,20 @@ class ServerMain {
                         ByteBuffer bb = ByteBuffer.allocate(1024) ;
                         socketChannel.register(selector, SelectionKey.OP_READ,bb);
                     } else if (key.isReadable()) {
-                        System.out.println("------isReadable");
-                        // 服务器可读取消息:得到事件发生的Socket通道
-                        SocketChannel socketChannel = (SocketChannel) key.channel();
-                        ByteBuffer bb = (ByteBuffer) key.attachment();
-                        bb.clear();
-                        int readNum = socketChannel.read(bb);
-                        if (readNum > 0) {
-                            echo = (Echo) Config.bytes2Object(bb.array()) ;
-                            System.out.println("服务器端接受客户端数据--:"+echo.toString());
-                            socketChannel.register(selector, SelectionKey.OP_WRITE,bb);
+                        try {
+                            System.out.println("------isReadable");
+                            // 服务器可读取消息:得到事件发生的Socket通道
+                            SocketChannel socketChannel = (SocketChannel) key.channel();
+                            ByteBuffer bb = (ByteBuffer) key.attachment();
+                            bb.clear();
+                            int readNum = socketChannel.read(bb);
+                            if (readNum > 0) {
+                                echo = PoUtils.bytes2Object(bb.array()) ;
+                                System.out.println("服务器端接受客户端数据--:"+echo.toString());
+                                socketChannel.register(selector, SelectionKey.OP_WRITE,bb);
+                            }
+                        } catch (IOException e) {
+                            key.cancel();
                         }
                     } else if (key.isWritable()) {
                         System.out.println("------isWritable");
@@ -72,16 +78,14 @@ class ServerMain {
                         ByteBuffer bb = (ByteBuffer) key.attachment();
                         bb.clear();
                         echo.setDate(new Date());
-                        bb.put(Config.object2Bytes(echo)) ;
+                        bb.put(PoUtils.object2Bytes(echo)) ;
                         bb.flip();
                         socketChannel.write(bb);
                         if (bb.remaining() == 0) {
-                            socketChannel.register(selector, SelectionKey.OP_READ,bb);
+                            key.cancel();
                         }
                     }
-
                 }
-
             }
         } catch (IOException e) {
             e.printStackTrace();

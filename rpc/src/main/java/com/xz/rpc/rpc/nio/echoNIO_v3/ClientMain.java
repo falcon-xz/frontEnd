@@ -1,5 +1,8 @@
 package com.xz.rpc.rpc.nio.echoNIO_v3;
 
+import com.xz.rpc.rpc.info.Config;
+import com.xz.rpc.rpc.info.po.PoUtils;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -55,7 +58,7 @@ class ClientMain implements Runnable {
                         bb.clear();
                         Echo echo = new Echo() ;
                         echo.setName("xz");
-                        bb.put(Config.object2Bytes(echo)) ;
+                        bb.put(PoUtils.object2Bytes(echo)) ;
                         bb.flip();
                         channel.write(bb);
                         channel.register(selector,SelectionKey.OP_READ,bb);
@@ -66,7 +69,7 @@ class ClientMain implements Runnable {
                         bb.clear() ;
                         int readNum = channel.read(bb);
                         if (readNum > 0) {
-                            Echo echo = (Echo)Config.bytes2Object(bb.array()) ;
+                            Echo echo = PoUtils.bytes2Object(bb.array()) ;
                             System.out.println("服务器端接受客户端数据--:"+echo.toString());
                             running=false ;
                         }

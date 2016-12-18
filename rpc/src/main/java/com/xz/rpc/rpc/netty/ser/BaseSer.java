@@ -1,11 +1,11 @@
 package com.xz.rpc.rpc.netty.ser;
 
-import com.xz.rpc.rpc.netty.transion.BasePo;
+import com.xz.rpc.rpc.info.po.BasePoNoSer;
 
 /**
  * falcon -- 2016/11/22.
  */
 public interface BaseSer {
-    <T extends BasePo> byte[] serialize(T obj) ;
-    <T extends BasePo> T deserialize(byte[] bytes, Class<T> targetClass) ;
+    <T extends BasePoNoSer> byte[] serialize(T obj) ;
+    <T extends BasePoNoSer> T deserialize(byte[] bytes, Class<T> targetClass) ;
 }

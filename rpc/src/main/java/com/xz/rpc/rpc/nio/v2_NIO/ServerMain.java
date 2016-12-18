@@ -1,9 +1,10 @@
 package com.xz.rpc.rpc.nio.v2_NIO;
 
-import com.xz.rpc.rpc.nio.v2_NIO.server.interfaces.Animal;
-import com.xz.rpc.rpc.nio.v2_NIO.server.interfaces.impl.Dog;
-import com.xz.rpc.rpc.nio.v2_NIO.server.rpc.RpcCenter;
-import com.xz.rpc.rpc.nio.v2_NIO.server.rpc.RpcServer;
+import com.xz.rpc.rpc.info.Config;
+import com.xz.rpc.rpc.info.RpcCenter;
+import com.xz.rpc.rpc.info.interfaces.Animal;
+import com.xz.rpc.rpc.info.interfaces.impl.Dog;
+import com.xz.rpc.rpc.nio.v2_NIO.server.RpcServer;
 
 import java.net.InetSocketAddress;
 

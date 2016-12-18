@@ -6,12 +6,12 @@ public class Cow implements Animal {
 
 	@Override
 	public String eat() {
-		return "�Բ�";
+		return "Cow";
 	}
 
 	@Override
 	public String hue() {
-		return "����";
+		return "hue";
 	}
 
 }

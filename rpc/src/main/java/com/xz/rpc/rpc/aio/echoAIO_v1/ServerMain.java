@@ -1,5 +1,7 @@
 package com.xz.rpc.rpc.aio.echoAIO_v1;
 
+import com.xz.rpc.rpc.info.Config;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -31,6 +33,7 @@ class ServerMain {
                     bb.clear() ;
                     result.read(bb).get(100, TimeUnit.SECONDS) ;
                     bb.flip() ;
+                    System.out.println(new String(bb.array()));
                     writeResult = result.write(bb) ;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -57,7 +60,11 @@ class ServerMain {
 
             @Override
             public void failed(Throwable exc, Object attachment) {
-                System.out.println("fali:"+exc);
+                try {
+                    System.out.println("fali:"+exc);
+                } finally {
+                    asynchronousServerSocketChannel.accept(null,this);
+                }
             }
         });
     }

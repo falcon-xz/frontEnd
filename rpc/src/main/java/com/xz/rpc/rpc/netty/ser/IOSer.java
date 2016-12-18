@@ -1,18 +1,20 @@
 package com.xz.rpc.rpc.netty.ser;
 
 
-import com.xz.rpc.rpc.netty.transion.BasePo;
+import com.xz.rpc.rpc.info.po.BasePoNoSer;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * falcon -- 2016/11/22.
  */
 public class IOSer implements BaseSer {
     @Override
-    public <T extends BasePo> byte[] serialize(T obj) {
+    public <T extends BasePoNoSer> byte[] serialize(T obj) {
         if (obj==null){
             throw new RuntimeException("序列化对象(" + obj + ")!");
         }
@@ -34,7 +36,7 @@ public class IOSer implements BaseSer {
     }
 
     @Override
-    public <T extends BasePo> T deserialize(byte[] bytes, Class<T> targetClass) {
+    public <T extends BasePoNoSer> T deserialize(byte[] bytes, Class<T> targetClass) {
         if (bytes==null){
             throw new RuntimeException("反序列化对象发生异常,byte序列为空!");
         }

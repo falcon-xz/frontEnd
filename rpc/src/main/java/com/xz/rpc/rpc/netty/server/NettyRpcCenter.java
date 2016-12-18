@@ -10,13 +10,13 @@ import java.util.concurrent.Executors;
  */
 public class NettyRpcCenter {
     private static Map<String, Object> map = new HashMap<>();
-    private static ExecutorService executorService = Executors.newCachedThreadPool() ;
     public static void regist(String key, Object value) {
         map.put(key, value);
     }
     public static Object refer(String key) {
         return map.get(key);
     }
+    private static ExecutorService executorService = Executors.newCachedThreadPool() ;
 
     public static void exec(Runnable runnable){
         executorService.submit(runnable) ;

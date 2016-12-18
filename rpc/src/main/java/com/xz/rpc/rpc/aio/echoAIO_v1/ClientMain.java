@@ -1,5 +1,7 @@
 package com.xz.rpc.rpc.aio.echoAIO_v1;
 
+import com.xz.rpc.rpc.info.Config;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -13,7 +15,7 @@ class ClientMain {
     public static void main(String[] args) {
         try {
             final AsynchronousSocketChannel client = AsynchronousSocketChannel.open() ;
-            client.connect(new InetSocketAddress("127.0.0.1", 9999), null, new CompletionHandler<Void, Object>() {
+            client.connect(new InetSocketAddress(Config.IP,Config.PORT), null, new CompletionHandler<Void, Object>() {
 
                 @Override
                 public void completed(Void result, Object attachment) {
@@ -35,28 +37,28 @@ class ClientMain {
 
                                 @Override
                                 public void failed(Throwable exc, Object attachment) {
-
+                                    System.out.println(exc.getMessage());
                                 }
                             });
                         }
 
                         @Override
                         public void failed(Throwable exc, Object attachment) {
-
+                            System.out.println(exc.getMessage());
                         }
                     });
                 }
 
                 @Override
                 public void failed(Throwable exc, Object attachment) {
-
+                    System.out.println(exc.getMessage());
                 }
             }) ;
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            Thread.sleep(1000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

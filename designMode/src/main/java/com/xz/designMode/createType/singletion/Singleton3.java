@@ -1,10 +1,5 @@
 package com.xz.designMode.createType.singletion;
 
-/**
- * ����
- * @author THink
- *
- */
 public class Singleton3 {
 	private static Singleton3 singleton2 = new Singleton3() ;
 	

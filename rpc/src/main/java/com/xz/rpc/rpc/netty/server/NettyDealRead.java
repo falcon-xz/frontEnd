@@ -1,7 +1,7 @@
 package com.xz.rpc.rpc.netty.server;
 
-import com.xz.rpc.rpc.netty.transion.Request;
-import com.xz.rpc.rpc.netty.transion.Response;
+import com.xz.rpc.rpc.info.po.RequestNoSer;
+import com.xz.rpc.rpc.info.po.ResponseNoSer;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,16 +14,15 @@ import java.lang.reflect.Method;
  */
 public class NettyDealRead implements Runnable {
     private ChannelHandlerContext channelHandlerContext ;
-    private Request msg ;
-    public NettyDealRead(ChannelHandlerContext channelHandlerContext, Request msg){
+    private RequestNoSer msg ;
+    public NettyDealRead(ChannelHandlerContext channelHandlerContext, RequestNoSer msg){
         this.channelHandlerContext = channelHandlerContext ;
         this.msg = msg ;
     }
     @Override
     public void run() {
-        System.out.println("处理request的线程");
-        final Response response = new Response();
-        response.setRequestId(msg.getRequestId());
+        final ResponseNoSer responseNoSer = new ResponseNoSer();
+        responseNoSer.setRequestId(msg.getRequestId());
         Class cz = msg.getInterFace() ;
         Object obj = NettyRpcCenter.refer(cz.getName()) ;
         Object ret = null ;
@@ -44,12 +43,12 @@ public class NettyDealRead implements Runnable {
             e.printStackTrace();
             ret = e ;
         }
-        response.setObject(ret);
+        responseNoSer.setObject(ret);
         System.out.println("处理完 request 发送response");
-        channelHandlerContext.writeAndFlush(response).addListener(new ChannelFutureListener() {
+        channelHandlerContext.writeAndFlush(responseNoSer).addListener(new ChannelFutureListener() {
             @Override
             public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                System.out.println("Send response for request " + response.getRequestId());
+                System.out.println("Send response for request " + responseNoSer.getRequestId());
             }
         });
         channelHandlerContext.close();

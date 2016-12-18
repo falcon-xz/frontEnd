@@ -1,6 +1,6 @@
 package com.xz.rpc.baseknow.reflect;
 
-import com.xz.rpc.baseknow.proxy.Animal;
+import com.xz.rpc.baseknow.proxy.Zoo;
 
 import java.lang.reflect.Method;
 
@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
  */
 public class Demo1 {
     public static void main(String[] args) {
-        Class cz = Animal.class ;
+        Class cz = Zoo.class ;
         try {
             Method method = cz.getMethod("jiao") ;
             System.out.println(method.getName());
