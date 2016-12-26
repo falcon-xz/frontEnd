@@ -6,6 +6,7 @@
     <import resource="classpath:spring/ApplicationContext.xml"/>
 
     <!--spring托管DBSpringFactory-->
+
     <bean name="dBSpringFactory" class="com.xz.common.utils.db.factory.DBSpringFactory" scope="singleton"/>
 
 </beans>
