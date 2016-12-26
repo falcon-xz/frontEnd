@@ -28,6 +28,7 @@
         <module name="other" />
         <module name="rest" />
         <module name="rpc" />
+        <module name="spring" />
         <module name="worm" />
       </profile>
     </annotationProcessing>
@@ -41,6 +42,7 @@
       <module name="other" target="1.7" />
       <module name="rest" target="1.7" />
       <module name="rpc" target="1.7" />
+      <module name="spring" target="1.7" />
       <module name="worm" target="1.7" />
     </bytecodeTargetLevel>
   </component>

@@ -31,12 +31,4 @@ public class ObjectUtils {
 
         return sb.toString() ;
     }
-
-    public static void main(String[] args) {
-        Map<String, Properties> map = new HashMap<>() ;
-        map.put("1",null) ;
-        map.put("2",null) ;
-        DbcpConnection dbcpConnection = new DbcpConnection(map) ;
-        System.out.println(ObjectUtils.println(dbcpConnection));
-    }
 }

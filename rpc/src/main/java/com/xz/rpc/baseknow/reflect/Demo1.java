@@ -1,6 +1,6 @@
 package com.xz.rpc.baseknow.reflect;
 
-import com.xz.rpc.baseknow.proxy.Zoo;
+import com.xz.rpc.baseknow.proxy.normal.Zoo;
 
 import java.lang.reflect.Method;
 

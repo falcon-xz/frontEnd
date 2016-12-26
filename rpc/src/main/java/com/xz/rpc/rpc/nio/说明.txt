@@ -1,0 +1,4 @@
+echoNIO_v1 回声字符串 两个bytebuffer  一个负责读 一个负责写   轮询方式
+echoNIO_v1 回声字符串 一个bytebuffer  负责读 写
+echoNIO_v1 回声对象 一个bytebuffer  负责读 写
+v1_NIO 传输使用byte数组 可与aio io互通

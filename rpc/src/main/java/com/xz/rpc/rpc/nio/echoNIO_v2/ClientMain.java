@@ -71,6 +71,9 @@ class ClientMain {
                 }
 
             }
+            System.out.println(socketChannel.finishConnect());
+            selector.close();
+            socketChannel.close();
 
         } catch (IOException e) {
             e.printStackTrace();

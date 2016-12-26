@@ -62,10 +62,17 @@ class ServerMain {
                         SocketChannel socketChannel = (SocketChannel) key.channel();
                         readBuffer.clear() ;
                         int readNum = socketChannel.read(readBuffer);
+                        System.out.println(readNum);
                         if (readNum > 0) {
+                            //有数据或者空数据
                             String receiveText = new String( readBuffer.array(),0,readNum);
                             System.out.println("服务器端接受客户端数据--:"+receiveText);
                             socketChannel.register(selector, SelectionKey.OP_WRITE);
+                        }else if (readNum == 0){
+                            socketChannel.register(selector, SelectionKey.OP_READ);
+                        } else{
+                            //断链
+                            key.cancel();
                         }
                     } else if (key.isWritable()) {
                         System.out.println("------isWritable");

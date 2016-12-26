@@ -37,6 +37,7 @@ class RpcListener implements Runnable {
             oos = new ObjectOutputStream(socket.getOutputStream()) ;
             oos.writeObject(rpcInvocationRes);
             oos.flush();
+            socket.shutdownOutput();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -45,6 +46,7 @@ class RpcListener implements Runnable {
             try {
                 ois.close();
                 oos.close();
+                socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

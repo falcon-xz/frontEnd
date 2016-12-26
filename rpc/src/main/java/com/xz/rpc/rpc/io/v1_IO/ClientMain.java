@@ -24,6 +24,7 @@ class ClientMain implements Runnable{
             Animal animal = RpcProxy.getProxy(Animal.class) ;
             long l1 = System.currentTimeMillis() ;
             System.out.println(animal.jiao());
+            System.out.println(animal.feed(l1+""));
             System.out.println(num+"--两次调用cost:"+(System.currentTimeMillis()-l1));
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -32,7 +33,7 @@ class ClientMain implements Runnable{
 
     public static void main(String[] args) {
         CountDownLatch cdl = new CountDownLatch(1) ;
-        for (int i = 0; i < 90 ; i++) {
+        for (int i = 0; i < 10 ; i++) {
             new Thread(new ClientMain(cdl,i)).start();
         }
         cdl.countDown();

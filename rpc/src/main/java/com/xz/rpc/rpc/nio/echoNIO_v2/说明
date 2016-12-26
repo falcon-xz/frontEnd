@@ -1,4 +1,0 @@
-本例使用 一个bytebuffer  负责读 写
-channel.read前 buffer.clear
-channel.write前 buffer.flip
-都使用nio 循环方式

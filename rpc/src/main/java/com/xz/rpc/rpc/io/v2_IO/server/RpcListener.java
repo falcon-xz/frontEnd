@@ -38,12 +38,14 @@ class RpcListener implements Runnable {
             byte[] bytes2 = PoUtils.object2Bytes(rpcInvocationRes) ;
             os.write(bytes2);
             os.flush();
+            socket.shutdownOutput();
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
             try {
                 is.close();
                 os.close();
+                socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

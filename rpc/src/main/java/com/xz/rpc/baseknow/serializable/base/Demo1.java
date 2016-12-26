@@ -10,7 +10,7 @@ public class Demo1 {
     public static void main(String[] args) {
         Transmission transmission = new Transmission("xz",12) ;
 
-        String filePath = Demo1.class.getClassLoader().getResource("").getPath()+"demo1" ;
+        String filePath = Demo1.class.getClassLoader().getResource("").getPath()+"demo2" ;
         File file = new File(filePath) ;
         if (file.exists()){
             file.delete();

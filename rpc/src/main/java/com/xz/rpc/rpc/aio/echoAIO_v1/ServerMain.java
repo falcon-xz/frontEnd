@@ -5,36 +5,92 @@ import com.xz.rpc.rpc.info.Config;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.*;
-import java.util.Iterator;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.nio.channels.AsynchronousChannelGroup;
+import java.nio.channels.AsynchronousServerSocketChannel;
+import java.nio.channels.AsynchronousSocketChannel;
+import java.nio.channels.CompletionHandler;
+import java.util.concurrent.*;
 
 /**
  *
  * Created by xz on 2016/10/26.
  */
-class ServerMain {
-    private AsynchronousServerSocketChannel asynchronousServerSocketChannel;
+class ServerMain implements Runnable{
+    private AsynchronousChannelGroup group ;
+    private AsynchronousServerSocketChannel serverSocketChannel;
+    private int i = 0 ;
 
     public ServerMain() throws IOException {
-        asynchronousServerSocketChannel = AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(Config.IP, Config.PORT)) ;
+        ExecutorService executorService = Executors.newFixedThreadPool(10) ;
+        group = AsynchronousChannelGroup.withThreadPool(executorService) ;
+        serverSocketChannel = AsynchronousServerSocketChannel.open(group).bind(new InetSocketAddress(Config.IP,Config.PORT)) ;
     }
 
-    public void start() {
-        asynchronousServerSocketChannel.accept(null, new CompletionHandler<AsynchronousSocketChannel, Object>() {
-            final  ByteBuffer bb = ByteBuffer.allocate(1024) ;
-            @Override
-            public void completed(AsynchronousSocketChannel result, Object attachment) {
-                Future<Integer> writeResult = null ;
+    @Override
+    public void run() {
+        serverSocketChannel.accept(serverSocketChannel, new AcceptCompletionHandler());
+    }
+
+    private class AcceptCompletionHandler implements CompletionHandler<AsynchronousSocketChannel, AsynchronousServerSocketChannel>{
+        @Override
+        public void completed(AsynchronousSocketChannel socketChannel, AsynchronousServerSocketChannel serverSocketChannel) {
+            try {
+                System.out.println("AcceptCompletionHandler"+(i++));
+                System.out.println("客户端:" + socketChannel.getRemoteAddress().toString());
+
+                ByteBuffer byteBuffer = ByteBuffer.allocate(1024) ;
+                byteBuffer.clear() ;
+
+                socketChannel.read(byteBuffer, socketChannel, new ReadCompletionHandler(byteBuffer));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                serverSocketChannel.accept(serverSocketChannel, this);
+            }
+        }
+
+        @Override
+        public void failed(Throwable exc, AsynchronousServerSocketChannel serverSocketChannel) {
+            System.out.println("AcceptCompletionHandler failed");
+            /*try {
+                serverSocketChannel.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+        }
+    }
+
+    private class ReadCompletionHandler implements CompletionHandler<Integer, AsynchronousSocketChannel>{
+        private ByteBuffer byteBuffer ;
+
+        public ReadCompletionHandler(ByteBuffer byteBuffer) {
+            this.byteBuffer = byteBuffer;
+        }
+
+        @Override
+        public void completed(Integer result, AsynchronousSocketChannel socketChannel) {
+            System.out.println("ReadCompletionHandler"+(i++));
+            if (result<0){
+                System.out.println("客户端断链");
                 try {
-                    bb.clear() ;
-                    result.read(bb).get(100, TimeUnit.SECONDS) ;
-                    bb.flip() ;
-                    System.out.println(new String(bb.array()));
-                    writeResult = result.write(bb) ;
+                    socketChannel.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                byteBuffer.clear() ;
+                try {
+                    socketChannel.read(byteBuffer).get(100,TimeUnit.SECONDS) ;
+                    byteBuffer.flip();
+                    String ret = new String(byteBuffer.array(),0,result);
+                    String ret2 = Thread.currentThread().getName() ;
+                    System.out.println("发送："+ret+ret2);
+                    byte[] bytes = (ret+ret2).getBytes() ;
+                    System.out.println(bytes.length);
+                    byteBuffer.clear();
+                    byteBuffer.put(bytes) ;
+                    byteBuffer.flip();
+                    socketChannel.write(byteBuffer) ;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -43,44 +99,71 @@ class ServerMain {
                     e.printStackTrace();
                 }finally {
                     try {
-                        asynchronousServerSocketChannel.accept(null,this);
-                        writeResult.get();
-                        result.close();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
+                        socketChannel.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-
-
             }
+        }
 
-            @Override
-            public void failed(Throwable exc, Object attachment) {
+        @Override
+        public void failed(Throwable exc, AsynchronousSocketChannel socketChannel) {
+            System.out.println("ReadCompletionHandler failed");
+            /*try {
+                serverSocketChannel.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+        }
+    }
+
+    private class WriteCompletionHandler implements CompletionHandler<Integer, AsynchronousSocketChannel>{
+        private ByteBuffer byteBuffer ;
+
+        public WriteCompletionHandler(ByteBuffer byteBuffer) {
+            this.byteBuffer = byteBuffer;
+        }
+
+        @Override
+        public void completed(Integer result, AsynchronousSocketChannel socketChannel) {
+            System.out.println("WriteCompletionHandler"+(i++));
+            if (result<0){
+                System.out.println("客户端断链");
                 try {
-                    System.out.println("fali:"+exc);
-                } finally {
-                    asynchronousServerSocketChannel.accept(null,this);
+                    socketChannel.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+
+                try {
+                    socketChannel.shutdownOutput() ;
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-        });
+
+        }
+
+        @Override
+        public void failed(Throwable exc, AsynchronousSocketChannel attachment) {
+            System.out.println("WriteCompletionHandler failed");
+        }
     }
 
     public static void main(String[] args) {
         try {
-            ServerMain rpcServer = new ServerMain() ;
-            rpcServer.start() ;
-            try {
-                while (true){
-                    Thread.sleep(1000);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            ServerMain serverMain = new ServerMain() ;
+            new Thread(serverMain).start();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            while (true){
+                Thread.sleep(1000);
+            }
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

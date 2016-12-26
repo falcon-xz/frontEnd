@@ -28,8 +28,9 @@ class RpcInvocation implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] params) throws Throwable {
         OutputStream os = null ;
         InputStream is = null ;
+        Socket socket = null ;
         try {
-            Socket socket = new Socket(Config.IP, Config.PORT) ;
+            socket = new Socket(Config.IP, Config.PORT) ;
             os = socket.getOutputStream() ;
             String uuid = UUID.randomUUID().toString() ;
             RequestSer requestSer = new RequestSer(uuid,interfaceClass,method.getName(),method.getParameterTypes(),params) ;
@@ -52,6 +53,8 @@ class RpcInvocation implements InvocationHandler {
             is = null ;
             os.close();
             os = null ;
+            socket.close();
+            socket = null ;
             return responseSer.getObject();
         } finally {
             if (is!=null){
@@ -59,6 +62,9 @@ class RpcInvocation implements InvocationHandler {
             }
             if (os!=null){
                 os.close();
+            }
+            if (socket!=null){
+                socket.close();
             }
         }
     }

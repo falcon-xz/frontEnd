@@ -32,11 +32,11 @@ class ClientMain implements Runnable{
     }
 
     public static void main(String[] args) {
-        /*CountDownLatch cdl = new CountDownLatch(1) ;
+        CountDownLatch cdl = new CountDownLatch(1) ;
         for (int i = 0; i < 3 ; i++) {
             new Thread(new ClientMain(cdl,i)).start();
         }
-        cdl.countDown();*/
+        cdl.countDown();
 
         Animal animal = RpcProxy.getProxy(Animal.class) ;
         long l1 = System.currentTimeMillis() ;

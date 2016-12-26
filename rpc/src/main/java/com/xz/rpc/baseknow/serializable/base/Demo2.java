@@ -15,7 +15,7 @@ public class Demo2 {
     public static void main(String[] args) {
         Transmission transmission = new Transmission("xzuu",12,"fuck") ;
 
-        String filePath = Demo2.class.getClassLoader().getResource("").getPath()+"demo2" ;
+        String filePath = Demo2.class.getClassLoader().getResource("").getPath()+"demo1" ;
         File file = new File(filePath) ;
         if (file.exists()){
             file.delete();

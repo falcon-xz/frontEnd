@@ -1,0 +1,2 @@
+v1_IO 传输使用对象流
+v2_IO 传输使用byte数组 可与aio nio互通

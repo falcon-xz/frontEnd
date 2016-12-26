@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="ambari" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="${ambari.url}"/>
+        <property name="username" value="${ambari.username}"/>
+        <property name="password" value="${ambari.password}"/>
+        <!--<property name="connectionProperties" value="v$session.program=acct-balance;tns=npubdb1"/>-->
+
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="maxActive" value="8"/>
+
+        <property name="maxWait" value="5000"/>
+
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 'x' from dual"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="timeBetweenLogStatsMillis" value="10000"/>
+
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="100"/>
+
+        <property name="filters" value="stat"/>
+    </bean>
+
+    <bean id="hive" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="${hive.url}"/>
+        <property name="username" value="${hive.username}"/>
+        <property name="password" value="${hive.password}"/>
+        <!--<property name="connectionProperties" value="v$session.program=acct-balance;tns=npubdb1"/>-->
+
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="maxActive" value="8"/>
+
+        <property name="maxWait" value="5000"/>
+
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 'x' from dual"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="timeBetweenLogStatsMillis" value="10000"/>
+
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="100"/>
+
+        <property name="filters" value="stat"/>
+    </bean>
+
+</beans>

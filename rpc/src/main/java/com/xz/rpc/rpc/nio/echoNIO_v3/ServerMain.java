@@ -64,10 +64,13 @@ class ServerMain {
                             ByteBuffer bb = (ByteBuffer) key.attachment();
                             bb.clear();
                             int readNum = socketChannel.read(bb);
-                            if (readNum > 0) {
+                            if (readNum >= 0) {
                                 echo = PoUtils.bytes2Object(bb.array()) ;
                                 System.out.println("服务器端接受客户端数据--:"+echo.toString());
                                 socketChannel.register(selector, SelectionKey.OP_WRITE,bb);
+                            }else{
+                                //断链
+                                key.cancel();
                             }
                         } catch (IOException e) {
                             key.cancel();
@@ -82,6 +85,7 @@ class ServerMain {
                         bb.flip();
                         socketChannel.write(bb);
                         if (bb.remaining() == 0) {
+                            socketChannel.shutdownOutput();
                             key.cancel();
                         }
                     }

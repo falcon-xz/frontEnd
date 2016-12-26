@@ -17,7 +17,7 @@ import java.util.Iterator;
 class ServerMain {
     private Selector selector;
     private ServerSocketChannel serverSocketChannel;
-    private int count = 0 ;
+    private int count = 0;
 
     public ServerMain() throws IOException {
         //serverSocket通道
@@ -52,8 +52,8 @@ class ServerMain {
                         SocketChannel socketChannel = server.accept();
                         socketChannel.configureBlocking(false);
                         // SelectionKey 有且只能关联一个对象 关联 ByteBuffer
-                        ByteBuffer bb = ByteBuffer.allocate(1024) ;
-                        socketChannel.register(selector, SelectionKey.OP_READ,bb);
+                        ByteBuffer bb = ByteBuffer.allocate(1024);
+                        socketChannel.register(selector, SelectionKey.OP_READ, bb);
                     } else if (key.isReadable()) {
                         try {
                             System.out.println("------isReadable");
@@ -62,26 +62,32 @@ class ServerMain {
                             ByteBuffer bb = (ByteBuffer) key.attachment();
                             bb.clear();
                             int readNum = socketChannel.read(bb);
-                            if (readNum > 0) {
-                                String receiveText = new String( bb.array(),0,readNum);
-                                System.out.println("服务器端接受客户端数据--:"+receiveText);
-                                socketChannel.register(selector, SelectionKey.OP_WRITE,bb);
+                            System.out.println("----------" + readNum);
+                            if (readNum >= 0) {
+                                String receiveText = new String(bb.array(), 0, readNum);
+                                System.out.println("服务器端接受客户端数据--:" + receiveText);
+                                socketChannel.register(selector, SelectionKey.OP_WRITE, bb);
+                            } else {
+                                //断链
+                                key.cancel();
                             }
                         } catch (IOException e) {
-                            key.cancel();
+                            //key.cancel();
                         }
                     } else if (key.isWritable()) {
                         System.out.println("------isWritable");
                         SocketChannel socketChannel = (SocketChannel) key.channel();
                         ByteBuffer bb = (ByteBuffer) key.attachment();
                         bb.clear();
-                        String ret = count++ +"server";
-                        System.out.println("返回："+ret);
-                        bb.put(ByteBuffer.wrap(ret.getBytes())) ;
+                        String ret = count++ + "server";
+                        System.out.println("返回：" + ret);
+                        bb.put(ByteBuffer.wrap(ret.getBytes()));
                         bb.flip();
                         socketChannel.write(bb);
                         if (bb.remaining() == 0) {
-                            socketChannel.register(selector, SelectionKey.OP_READ,bb);
+                            bb.clear();
+                            socketChannel.shutdownOutput();
+                            key.cancel();
                         }
                     }
 
@@ -107,8 +113,8 @@ class ServerMain {
     public static void main(String[] args) {
 
         try {
-            ServerMain rpcServer = new ServerMain() ;
-            rpcServer.start() ;
+            ServerMain rpcServer = new ServerMain();
+            rpcServer.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
