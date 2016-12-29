@@ -5,7 +5,7 @@
 
     <import resource="classpath:spring/ApplicationContext.xml"/>
 
-    <bean id="helloWorld" class="com.xz.spring.example.demo1.HelloWorld" init-method="init">
+    <bean id="helloWorld" class="com.xz.spring.ioc.demo1.HelloWorld" init-method="init">
         <constructor-arg value="hello world"/>
     </bean>
 </beans>
