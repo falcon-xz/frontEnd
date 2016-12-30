@@ -20,7 +20,6 @@ public class MyServletNoXML extends HttpServlet {
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	
     	Map<String, String[]> map = request.getParameterMap() ;
     	Iterator<String> it = map.keySet().iterator() ;
     	while (it.hasNext()) {

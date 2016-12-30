@@ -3,6 +3,7 @@ package com.xz.rest.jetty.server;
 import com.xz.rest.jetty.config.JettyConfig;
 import com.xz.rest.jetty.filter.MyFilter;
 import com.xz.rest.jetty.servlet.MyServletNoXML;
+import com.xz.rest.jetty.servlet.http.TransationServlet;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
@@ -32,6 +33,7 @@ public class JettyServerNoXML {
 
 		root.addFilter(new FilterHolder(new MyFilter()),"*",1) ;
 		root.addServlet(new ServletHolder(new MyServletNoXML()),"/MyServletNoXML.do");
+		root.addServlet(new ServletHolder(new TransationServlet()),"/TransationServlet");
 		server.setHandler(root);
 		server.setThreadPool(new QueuedThreadPool(20));
 

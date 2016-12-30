@@ -31,6 +31,16 @@
     <servlet-name>MyServletWithXML</servlet-name>
     <url-pattern>/MyServletWithXML.do</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>TransationServlet</servlet-name>
+    <servlet-class>com.xz.rest.jetty.servlet.http.TransationServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>TransationServlet</servlet-name>
+    <url-pattern>/TransationServlet</url-pattern>
+  </servlet-mapping>
   <filter>
     <filter-name>Character</filter-name>
     <filter-class>com.xz.rest.jetty.filter.MyFilter</filter-class>
