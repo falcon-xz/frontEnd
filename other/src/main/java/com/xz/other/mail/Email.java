@@ -24,7 +24,7 @@ public class Email {
     // 发件人的账号
     props.put("mail.user", "xzparty@sina.com");
     // 访问SMTP服务时需要提供的密码
-    props.put("mail.password", "5584143xz");
+    props.put("mail.password", "1qaz!QAZ");
 
     // 构建授权信息，用于进行SMTP进行身份验证
     Authenticator authenticator = new Authenticator() {
