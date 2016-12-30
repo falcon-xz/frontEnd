@@ -12,39 +12,6 @@
     <artifactId>other</artifactId>
 <dependencies>
 
-    <!--mail start-->
-    <!--<dependency>
-        <groupId>com.sun.mail</groupId>
-        <artifactId>mailapi</artifactId>
-        <version>1.4.5</version>
-    </dependency>-->
-    <dependency>
-        <groupId>com.sun.mail</groupId>
-        <artifactId>smtp</artifactId>
-        <version>1.4.5</version>
-    </dependency>
-    <dependency>
-        <groupId>com.sun.mail</groupId>
-        <artifactId>imap</artifactId>
-        <version>1.4.5</version>
-    </dependency>
-    <dependency>
-        <groupId>com.sun.mail</groupId>
-        <artifactId>dsn</artifactId>
-        <version>1.4.5</version>
-    </dependency>
-    <dependency>
-        <groupId>com.sun.mail</groupId>
-        <artifactId>pop3</artifactId>
-        <version>1.4.5</version>
-    </dependency>
-    <dependency>
-        <groupId>com.sun.mail</groupId>
-        <artifactId>javax.mail</artifactId>
-        <version>1.4.5</version>
-    </dependency>
-    <!--mail end-->
-
     <dependency>
         <groupId>org.dom4j</groupId>
         <artifactId>dom4j</artifactId>
