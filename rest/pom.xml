@@ -12,7 +12,8 @@
     <url>http://maven.apache.org</url>
     <properties>
         <jersey.version>1.18</jersey.version>
-        <jetty-version>7.6.7.v20120910</jetty-version>
+        <!-- 7.6.7.v20120910-->
+        <jetty-version>9.3.6.v20151106</jetty-version>
     </properties>
     <dependencies>
         <dependency>

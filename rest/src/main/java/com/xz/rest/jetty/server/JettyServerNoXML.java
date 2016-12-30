@@ -6,7 +6,7 @@ import com.xz.rest.jetty.servlet.MyServletNoXML;
 import com.xz.rest.jetty.servlet.http.TransationServlet;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -23,7 +23,7 @@ public class JettyServerNoXML {
 	private Server server = null;
 
 	public void run() throws Exception {
-		server = new Server();
+		server = new Server(4444);
 		
 		
 		//设置
@@ -31,16 +31,13 @@ public class JettyServerNoXML {
 				CONTEXT_PATH, ServletContextHandler.SECURITY
 						| ServletContextHandler.SESSIONS);
 
-		root.addFilter(new FilterHolder(new MyFilter()),"*",1) ;
+		root.addFilter(new FilterHolder(new MyFilter()),"*",null) ;
 		root.addServlet(new ServletHolder(new MyServletNoXML()),"/MyServletNoXML.do");
 		root.addServlet(new ServletHolder(new TransationServlet()),"/TransationServlet");
 		server.setHandler(root);
-		server.setThreadPool(new QueuedThreadPool(20));
 
 		//连接器
-		Connector connector = new SelectChannelConnector() ;
-		connector.setHost(config.getHost());
-		connector.setPort(config.getPort());
+		Connector connector = new ServerConnector(server) ;
 		server.addConnector(connector);
 		
 		
