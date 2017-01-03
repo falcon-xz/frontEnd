@@ -4,15 +4,10 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.junit.Test;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
-
 public class ClientTest {
 	private String baseUrl = "http://localhost:8080/jersey/rest/student";
 
-	@Test
+	/*@Test
 	public void testDelete() {
 		Client client = Client.create();
 		WebResource webResource = client.resource(baseUrl + "/3");
@@ -33,6 +28,6 @@ public class ClientTest {
 				ClientResponse.class);
 		System.out.println("Response for put request: " + response.getStatus());
 
-	}
+	}*/
 
 }

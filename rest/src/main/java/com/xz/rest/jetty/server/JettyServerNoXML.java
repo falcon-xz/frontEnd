@@ -11,6 +11,7 @@ import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.glassfish.jersey.servlet.ServletContainer;
 
 /**
  * jetty 内嵌 
@@ -34,15 +35,17 @@ public class JettyServerNoXML {
 		root.addFilter(new FilterHolder(new MyFilter()),"*",null) ;
 		root.addServlet(new ServletHolder(new MyServletNoXML()),"/MyServletNoXML.do");
 		root.addServlet(new ServletHolder(new TransationServlet()),"/TransationServlet");
+
+		ServletHolder jersey = new ServletHolder(new ServletContainer());
+		jersey.setInitParameter("jersey.config.server.provider.packages","com.xz.rest.jersey.resource");
+		root.addServlet(jersey,"/rest/*") ;
+
 		server.setHandler(root);
 
 		//连接器
 		Connector connector = new ServerConnector(server) ;
 		server.addConnector(connector);
-		
-		
-		
-		
+
 		 // 设置在JVM退出时关闭Jetty的服务
 		server.setStopAtShutdown(true);
 		

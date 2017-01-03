@@ -1,13 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
 
   <servlet>
     <servlet-name>StudentServlet</servlet-name>
-    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
     <init-param>
       <!--设置REST资源所在的包(可选)-->
-      <param-name>com.sun.jersey.config.property.packages</param-name>
+      <param-name>jersey.config.server.provider.packages</param-name>
       <param-value>com.xz.rest.jersey.resource</param-value>
     </init-param>
   </servlet>
@@ -15,17 +16,6 @@
     <servlet-name>StudentServlet</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
-
-  <servlet>
-    <servlet-name>MyServletWithXML</servlet-name>
-    <servlet-class>com.xz.rest.jetty.servlet.MyServletWithXML</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>MyServletWithXML</servlet-name>
-    <url-pattern>/MyServletWithXML.do</url-pattern>
-  </servlet-mapping>
-
   <servlet>
     <servlet-name>TransationServlet</servlet-name>
     <servlet-class>com.xz.rest.jetty.servlet.http.TransationServlet</servlet-class>
