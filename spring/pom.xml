@@ -7,22 +7,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>spring Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <properties>
-        <spring.version>3.1.1.RELEASE</spring.version>
+        <spring.version>4.0.3.RELEASE</spring.version>
+        <start-class>com.xz.spring.shell.ShellExecute</start-class>
     </properties>
     <dependencies>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-asm</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>
@@ -73,6 +69,33 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>org.springframework.shell</groupId>
+            <artifactId>spring-shell</artifactId>
+            <version>1.1.0.RC3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>1.0.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>1.0.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>1.0.2.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jline</groupId>
+            <artifactId>jline</artifactId>
+            <version>2.11</version>
+        </dependency>
+
         <!--connection-->
         <dependency>
             <groupId>mysql</groupId>
@@ -94,6 +117,12 @@
         </dependency>
 
         <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.3</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.0.26</version>
@@ -109,5 +138,28 @@
     </dependencies>
     <build>
         <finalName>spring</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <skipAssembly>true</skipAssembly>
+                </configuration>
+            </plugin>
+            <!--<plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.0.2.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>${start-class}</mainClass>
+                </configuration>
+            </plugin>-->
+        </plugins>
     </build>
 </project>
