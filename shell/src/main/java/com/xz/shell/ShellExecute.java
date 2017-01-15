@@ -20,7 +20,7 @@ public class ShellExecute {
 
     public void run(String... strings) throws Exception {
         ConsoleReader reader = new ConsoleReader();
-        //history
+        //history {use_home}/{historyFile}
         reader.setHistoryEnabled(true);
         File fileHistory = new File(System.getProperty("user.home") + File.separator + historyFile);
         History history = new FileHistory(fileHistory);
@@ -29,6 +29,7 @@ public class ShellExecute {
 
         reader.setExpandEvents(false);
         reader.setBellEnabled(false);
+
 
     }
 
