@@ -1,5 +1,6 @@
 package com.xz.shell;
 
+import com.xz.shell.zookeeper.ShellZn;
 import jline.console.ConsoleReader;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
@@ -14,12 +15,14 @@ import java.util.List;
  * falcon -- 2017/1/4.
  */
 public class ShellExecute {
-
+    private ShellZn shellZn ;
     private String historyFile = null;
-
-    public ShellExecute() {
+    public ShellExecute(){
         this.historyFile = ".xzShellConf";
+        shellZn = new ShellZn() ;
+        shellZn.register();
     }
+
 
     public void run(String[] args) throws Exception {
         ConsoleReader reader = new ConsoleReader();

@@ -50,6 +50,16 @@ public class NetWorkUtil {
         return list.toArray(new String[list.size()]) ;
     }
 
+    public static String getLocalIp(){
+        String ip = null ;
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return ip;
+    }
+
     public static InetAddress getInetAddress(){
         try{
             return InetAddress.getLocalHost();
