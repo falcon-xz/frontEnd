@@ -15,9 +15,21 @@ import org.glassfish.jersey.servlet.ServletContainer;
  * falcon -- 2017/1/18.
  */
 public class JettyServer {
+    private static JettyServer jettyServer = new JettyServer() ;
+    private JettyServer(){
+
+    }
+    private Server server ;
+    public static JettyServer newInstance(){
+        return jettyServer ;
+    }
+
+    public boolean isStart(){
+        return server!=null ;
+    }
 
     public void start(String contentPath,int port){
-        Server server  = new Server(port);
+        server  = new Server(port);
         ServletContextHandler root = new ServletContextHandler(server,
                 contentPath, ServletContextHandler.SECURITY
                 | ServletContextHandler.SESSIONS);
@@ -35,7 +47,7 @@ public class JettyServer {
 
         try {
             server.start();
-            server.join();
+            //server.join();
         } catch (Exception e) {
             e.printStackTrace();
         }

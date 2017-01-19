@@ -14,22 +14,31 @@ import java.util.concurrent.CountDownLatch;
  * falcon -- 2017/1/18.
  */
 public class ShellZn {
-    private JettyServer jettyServer = new JettyServer() ;
+    private JettyServer jettyServer = JettyServer.newInstance() ;
+    private int jettyServerPort = 4444 ;
+    private String root = "/ShellZn" ;
     public ShellZn(){
-        String root = "/ShellZn" ;
+        //创建根节点
         ZooKeeper zk = ZooKeeperUtils.getConnection() ;
-        System.out.println("-----------"+zk.hashCode());
+        System.out.println("------"+zk.hashCode());
         boolean hasRoot = ZooKeeperUtils.hasZn(zk,root) ;
         if (!hasRoot){
             ZooKeeperUtils.createZn(zk,root) ;
         }
-        jettyServer.start("",4444);
+        if (!jettyServer.isStart()){
+            jettyServer.start("",jettyServerPort);
+        }
     }
 
     public boolean register(){
         boolean bo = false ;
         ZooKeeper zk = ZooKeeperUtils.getConnection() ;
-        System.out.println("-----------"+zk.hashCode());
+        System.out.println("------"+zk.hashCode());
+        String ip = getIp() ;
+        String zn = root+"/"+ip.replaceAll("[.]","") ;
+        String data = ip+":"+jettyServerPort ;
+
+        ZooKeeperUtils.createTmpZn(zk,zn,data) ;
         return bo ;
     }
 

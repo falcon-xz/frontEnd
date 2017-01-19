@@ -5,6 +5,7 @@ import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -13,10 +14,11 @@ import java.util.concurrent.CountDownLatch;
  * falcon -- 2017/1/18.
  */
 public class ZooKeeperUtils {
-    private final static String zookeeperIp = "192.168.211.135:2181" ;
+    /*private final static String zookeeperIp = "192.168.211.135:2181" ;*/
+    private final static String zookeeperIp = "172.32.148.163:2181" ;
     private final static int zookeeperTimeOut = 6000 ;
-    public static ZooKeeper zk = null ;
-    public static CountDownLatch latch = null ;
+    private static ZooKeeper zk = null ;
+    private static CountDownLatch latch = null ;
     public static ZooKeeper getConnection(){
         if (zk!=null && zk.getState().isAlive()){
             return zk ;
@@ -57,11 +59,13 @@ public class ZooKeeperUtils {
     public static boolean createTmpZn(ZooKeeper zk,String zn,String data){
         boolean bo = false ;
         try {
-            zk.create(zn,null, ZooDefs.Ids.READ_ACL_UNSAFE, CreateMode.EPHEMERAL);
+            zk.create(zn,data.getBytes("utf-8"), ZooDefs.Ids.READ_ACL_UNSAFE, CreateMode.EPHEMERAL);
             bo = true ;
         } catch (KeeperException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return bo ;
@@ -69,7 +73,7 @@ public class ZooKeeperUtils {
     public static boolean createZn(ZooKeeper zk,String zn){
         boolean bo = false ;
         try {
-            zk.create(zn,null, ZooDefs.Ids.READ_ACL_UNSAFE, CreateMode.PERSISTENT);
+            zk.create(zn,null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
             bo = true ;
         } catch (KeeperException e) {
             e.printStackTrace();

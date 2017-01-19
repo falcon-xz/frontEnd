@@ -62,10 +62,18 @@ public class RpcClient {
         }
     }
     public static void main(String[] args) {
-        try {
-            RpcClient.sendMessage();
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (int i = 0; i < 500; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        RpcClient.sendMessage();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         }
+
     }
 }
