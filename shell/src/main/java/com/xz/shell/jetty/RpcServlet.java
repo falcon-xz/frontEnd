@@ -1,5 +1,9 @@
 package com.xz.shell.jetty;
 
+import com.xz.common.utils.reflect.ObjectUtils;
+import com.xz.shell.xml.XMLUtils;
+import com.xz.shell.xml.XMLpo;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +23,8 @@ public class RpcServlet extends HttpServlet {
         String ip = request.getRemoteHost();
 
         BufferedReader reader = request.getReader();
-        String line = "";
-        StringBuffer inputString = new StringBuffer();
-        while ((line = reader.readLine()) != null) {
-            inputString.append(line);
-        }
+        XMLpo xmLpo = XMLUtils.parse(reader) ;
+        System.out.println(ObjectUtils.println(xmLpo));
 
         StringBuffer resultBuffer = new StringBuffer();
         resultBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
