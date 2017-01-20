@@ -17,18 +17,21 @@ public class RpcServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String ip = request.getRemoteHost();
+
         BufferedReader reader = request.getReader();
         String line = "";
         StringBuffer inputString = new StringBuffer();
         while ((line = reader.readLine()) != null) {
             inputString.append(line);
         }
+
         StringBuffer resultBuffer = new StringBuffer();
         resultBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-                .append("<report_data>")
-                .append("<respon_req>")
-                .append(inputString.toString()).append("</respon_req>")
-                .append("</report_data>");
+                .append("<ret>")
+                .append("<code>")
+                .append(200)
+                .append("</code>")
+                .append("</ret>");
 
         // 设置发送报文的格式
         response.setContentType("text/xml");
