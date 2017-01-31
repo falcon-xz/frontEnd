@@ -14,8 +14,8 @@ import java.util.concurrent.CountDownLatch;
  * falcon -- 2017/1/18.
  */
 public class ZooKeeperUtils {
-    /*private final static String zookeeperIp = "192.168.211.135:2181" ;*/
-    private final static String zookeeperIp = "172.32.148.163:2181" ;
+    private final static String zookeeperIp = "192.168.211.135:2181" ;
+    /*private final static String zookeeperIp = "172.32.148.163:2181" ;*/
     private final static int zookeeperTimeOut = 6000 ;
     private static ZooKeeper zk = null ;
     private static CountDownLatch latch = null ;

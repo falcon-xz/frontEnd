@@ -1,14 +1,10 @@
 package com.xz.shell.zookeeper;
 
 import com.xz.shell.jetty.JettyServer;
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * falcon -- 2017/1/18.
@@ -20,7 +16,6 @@ public class ShellZn {
     public ShellZn(){
         //创建根节点
         ZooKeeper zk = ZooKeeperUtils.getConnection() ;
-        System.out.println("------"+zk.hashCode());
         boolean hasRoot = ZooKeeperUtils.hasZn(zk,root) ;
         if (!hasRoot){
             ZooKeeperUtils.createZn(zk,root) ;
@@ -33,7 +28,6 @@ public class ShellZn {
     public boolean register(){
         boolean bo = false ;
         ZooKeeper zk = ZooKeeperUtils.getConnection() ;
-        System.out.println("------"+zk.hashCode());
         String ip = getIp() ;
         String zn = root+"/"+ip.replaceAll("[.]","") ;
         String data = ip+":"+jettyServerPort ;
