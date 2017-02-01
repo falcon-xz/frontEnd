@@ -118,6 +118,7 @@ public class XMLUtils {
                 +"<date>3</date>"
                 +"<content>5</content>"
                 +"</root>" ;
+        System.out.println(s);
         XMLpo xmLpo = XMLUtils.parse(new ByteArrayInputStream(s.getBytes()));
         System.out.println(ObjectUtils.println(xmLpo));
     }

@@ -42,5 +42,6 @@ public class RpcServlet extends HttpServlet {
         out.println(resultBuffer.toString());
         out.flush();
         out.close();
+
     }
 }

@@ -4,11 +4,9 @@ import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
-import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
@@ -22,7 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * test zk syc Event
  * falcon -- 2017/1/31.
  */
-public class ZkTest implements Runnable{
+public class ZkListenGetChildrenTest implements Runnable{
     private ScheduledExecutorService service = null ;
     private ZooKeeper zk = null ;
     private CountDownLatch latch = null ;
@@ -30,7 +28,7 @@ public class ZkTest implements Runnable{
     private List<String> list ;
     private Lock lock = new ReentrantLock() ;
     private Random random = new Random() ;
-    public ZkTest(){
+    public ZkListenGetChildrenTest(){
         service = Executors.newSingleThreadScheduledExecutor() ;
         latch = new CountDownLatch(1) ;
     }
@@ -104,6 +102,6 @@ public class ZkTest implements Runnable{
     }
 
     public static void main(String[] args) {
-        new ZkTest().start();
+        new ZkListenGetChildrenTest().start();
     }
 }

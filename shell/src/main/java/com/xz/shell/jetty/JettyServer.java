@@ -34,7 +34,8 @@ public class JettyServer {
                 contentPath, ServletContextHandler.SECURITY
                 | ServletContextHandler.SESSIONS);
 
-        root.addServlet(new ServletHolder(new RpcServlet()),"/RpcServlet");
+        //直接访问 http://ip:port
+        root.addServlet(new ServletHolder(new RpcServlet()),"");
 
         server.setHandler(root);
 

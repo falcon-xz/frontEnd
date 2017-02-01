@@ -15,7 +15,7 @@ import java.net.URL;
 public class RpcClient {
     public static void sendMessage() throws Exception {
         StringBuffer sendStr = new StringBuffer();
-        sendStr.append("hello");
+        sendStr.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><ip>1</ip><type>2</type><date>3</date><content>5</content></root>");
 
         BufferedReader reader = null;
 
@@ -24,7 +24,7 @@ public class RpcClient {
             StringBuffer buffer = new StringBuffer();
 
             // 接报文的地址
-            URL url = new URL("http://localhost:4444/RpcServlet");
+            URL url = new URL("http://localhost:4444");
 
             HttpURLConnection servletConnection = (HttpURLConnection) url
                     .openConnection();
@@ -62,7 +62,7 @@ public class RpcClient {
         }
     }
     public static void main(String[] args) {
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 50; i++) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
