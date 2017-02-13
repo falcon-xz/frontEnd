@@ -9,6 +9,7 @@ import com.xz.rpc.rpc.info.po.ResponseSer;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -86,6 +87,10 @@ public class RpcListener implements Runnable {
         // 服务器可读取消息:得到事件发生的Socket通道
         SocketChannel socketChannel = (SocketChannel) key.channel();
         ByteBuffer byteBuffer = ByteBuffer.allocate(bufferSize) ;
+        //字节序设置
+        if (byteBuffer.order() == ByteOrder.LITTLE_ENDIAN) {
+            byteBuffer.order(ByteOrder.BIG_ENDIAN);
+        }
         byteBuffer.clear();
         try {
             long l1 = System.currentTimeMillis() ;

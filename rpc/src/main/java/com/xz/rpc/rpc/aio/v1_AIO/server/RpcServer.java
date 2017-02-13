@@ -11,6 +11,7 @@ import com.xz.rpc.rpc.info.po.ResponseSer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.channels.AsynchronousChannelGroup;
 import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.AsynchronousSocketChannel;
@@ -46,6 +47,9 @@ public class RpcServer {
         public void completed(AsynchronousSocketChannel socketChannel, AsynchronousServerSocketChannel serverSocketChannel) {
             try {
                 ByteBuffer byteBuffer = ByteBuffer.allocate(1024) ;
+                if (byteBuffer.order() == ByteOrder.LITTLE_ENDIAN) {
+                    byteBuffer.order(ByteOrder.BIG_ENDIAN);
+                }
                 byteBuffer.clear() ;
                 socketChannel.read(byteBuffer, socketChannel, new DealCompletionHandler(byteBuffer,rpcCenter));
             } finally {
