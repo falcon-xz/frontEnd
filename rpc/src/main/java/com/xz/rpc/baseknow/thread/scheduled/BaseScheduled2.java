@@ -33,9 +33,9 @@ public class BaseScheduled2 implements Runnable{
         scheduledExecutorService.scheduleWithFixedDelay(baseScheduled2,0,2,TimeUnit.SECONDS) ;
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(2000);
             baseScheduled2.setRunning(false);
-            Thread.sleep(10000);
+            Thread.sleep(2000);
             List<Runnable> list = scheduledExecutorService.shutdownNow();
             for (Runnable r:list) {
                 System.out.println(r.getClass()) ;
