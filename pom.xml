@@ -74,5 +74,6 @@
         <module>other</module>
         <module>spring</module>
         <module>shell</module>
+        <module>util</module>
     </modules>
 </project>
