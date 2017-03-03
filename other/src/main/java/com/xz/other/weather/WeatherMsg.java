@@ -1,8 +1,6 @@
 package com.xz.other.weather;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Node;
+import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
 import java.io.UnsupportedEncodingException;
@@ -41,9 +39,9 @@ public class WeatherMsg {
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(url);
 
-			List<Node> list = document.selectNodes("//Profiles/Weather/*");
-			for (int i = 0; i < list.size(); i++) {
-				Node node = list.get(i);
+			List list = document.selectNodes("//Profiles/Weather/*");
+			for (Object aList : list) {
+				Node node = (Node) aList;
 				contents.put(node.getName(), node.getText());
 			}
 			Weather weather = new Weather(contents);

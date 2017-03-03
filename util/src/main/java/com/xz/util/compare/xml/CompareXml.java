@@ -4,7 +4,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +11,8 @@ import java.util.Map;
 public class CompareXml {
 
     public static void main(String[] args) {
-        String path1 = "C:\\Users\\Administrator\\Desktop\\hbase-hue\\NCMP\\hdfs-site.xml";
-        String path2 = "C:\\Users\\Administrator\\Desktop\\hbase-hue\\NMDBP\\hdfs-site.xml";
+        String path1 = "C:\\Users\\Administrator\\Desktop\\hbase-hue\\NCMP\\hbase-site.xml";
+        String path2 = "C:\\Users\\Administrator\\Desktop\\hbase-hue\\NMDBP\\hbase-site.xml";
 
 
         System.out.println(path1);
