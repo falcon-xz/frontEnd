@@ -5,6 +5,7 @@ package com.xz.other.construct;
  */
 public class Test {
     public static void main(String[] args) {
-        Child child = new Child(new PoImpl()) ;
+        Child child = new Child(new PoImpl2()) ;
+        System.out.println(child.getPo());
     }
 }

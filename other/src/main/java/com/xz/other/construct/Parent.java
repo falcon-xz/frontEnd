@@ -6,14 +6,11 @@ package com.xz.other.construct;
 public class Parent {
     private Po p ;
     public <T extends Po> Parent(T t) {
-        this.p = p ;
+        this.p = t ;
         System.out.println("extends Po");
     }
 
-    public Parent() {
-        System.out.println("no extends Po");
-    }
-    public Parent(String s) {
-        System.out.println("no extends Po2");
+    protected String getPo(){
+        return p.getClass().getName();
     }
 }
