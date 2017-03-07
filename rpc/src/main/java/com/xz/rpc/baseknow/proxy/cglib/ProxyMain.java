@@ -7,7 +7,7 @@ public class ProxyMain {
     public static void main(String[] args) {
         CglibProxy cglibProxy = new CglibProxy() ;
         ZooCat zooCat = cglibProxy.getProxy(ZooCat.class) ;
-        System.out.println(zooCat.getClass());
-        System.out.println(zooCat.jiao("hello"));
+        System.out.println("result:"+zooCat.getClass());
+        System.out.println("result:"+zooCat.jiao("hello"));
     }
 }
