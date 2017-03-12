@@ -1,13 +1,10 @@
-package com.xz.rpc.baseknow.concurrent;
-
-import java.util.concurrent.locks.ReentrantLock;
+package com.xz.rpc.baseknow.thread.simple.lock;
 
 /**
  * falcon -- 2016/11/17.
  */
 public class SynTest implements Runnable {
 
-    private ReentrantLock reentrantLock = new ReentrantLock();
     private SynNum synNum;
     private boolean type;
 
@@ -48,7 +45,7 @@ public class SynTest implements Runnable {
 
         void jia() {
             synchronized (o) {
-                while (num == 20) {
+                while (num == 1) {
                     try {
                         o.wait();
                     } catch (InterruptedException e) {

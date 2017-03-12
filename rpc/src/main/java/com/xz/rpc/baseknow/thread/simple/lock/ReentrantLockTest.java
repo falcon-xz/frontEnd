@@ -1,4 +1,4 @@
-package com.xz.rpc.baseknow.concurrent;
+package com.xz.rpc.baseknow.thread.simple.lock;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
