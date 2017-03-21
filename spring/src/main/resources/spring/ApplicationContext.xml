@@ -13,8 +13,7 @@
 
     <import resource="classpath*:spring/datasource-spring-*.xml"/>
 
-    <bean id="dbProperties"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <bean id="dbProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="order" value="0"/>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
         <property name="locations">

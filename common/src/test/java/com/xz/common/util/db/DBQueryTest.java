@@ -10,7 +10,7 @@ import java.sql.*;
 public class DBQueryTest {
     public static void main(String[] args) {
         try {
-            Connection conn = DBUtil.getConnection("ambari");
+            Connection conn = DBUtil.getConnection("hive");
             PreparedStatement pstm = conn.prepareStatement("select ? from dual") ;
             pstm.setString(1,"2");
             ResultSet rs = pstm.executeQuery() ;

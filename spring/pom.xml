@@ -12,7 +12,7 @@
     <url>http://maven.apache.org</url>
     <properties>
         <spring.version>4.0.3.RELEASE</spring.version>
-        <start-class>com.xz.spring.shell.ShellExecute</start-class>
+        <start-class>com.xz.spring.db.ShellExecute</start-class>
     </properties>
     <dependencies>
 
