@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -15,27 +16,27 @@ import java.util.List;
  */
 public class NetWorkUtil {
 
-    public static boolean isWindowsOS(){
+    public static boolean isWindowsOS() {
         boolean isWindowsOS = false;
         String osName = System.getProperty("os.name");
-        if(osName.toLowerCase().indexOf("windows")>-1){
+        if (osName.toLowerCase().indexOf("windows") > -1) {
             isWindowsOS = true;
         }
         return isWindowsOS;
     }
 
-    public static String[] getLocalIpList(){
-        List<String> list = new ArrayList<>() ;
+    public static String[] getLocalIpList() {
+        List<String> list = new ArrayList<>();
         try {
-            Enumeration<NetworkInterface> enumerations = NetworkInterface.getNetworkInterfaces() ;
+            Enumeration<NetworkInterface> enumerations = NetworkInterface.getNetworkInterfaces();
             while (enumerations.hasMoreElements()) {
                 NetworkInterface netInterface = enumerations.nextElement();
                 // 每个网络地址都有多个网络地址 回环地址（lookback） sitelocal IPV4 IPV6
                 Enumeration<InetAddress> addresses = netInterface.getInetAddresses();
-                String back = null ;
+                String back = null;
                 while (addresses.hasMoreElements()) {
                     InetAddress address = addresses.nextElement();
-                    if(address instanceof Inet6Address){
+                    if (address instanceof Inet6Address) {
                         continue;
                     }
                     if (address.isSiteLocalAddress() && !address.isLoopbackAddress()) {
@@ -47,11 +48,11 @@ public class NetWorkUtil {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        return list.toArray(new String[list.size()]) ;
+        return list.toArray(new String[list.size()]);
     }
 
-    public static String getLocalIp(){
-        String ip = null ;
+    public static String getLocalIp() {
+        String ip = null;
         try {
             ip = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
@@ -60,10 +61,10 @@ public class NetWorkUtil {
         return ip;
     }
 
-    public static InetAddress getInetAddress(){
-        try{
+    public static InetAddress getInetAddress() {
+        try {
             return InetAddress.getLocalHost();
-        }catch(UnknownHostException e){
+        } catch (UnknownHostException e) {
             System.out.println("unknown host!");
         }
         return null;
@@ -72,6 +73,7 @@ public class NetWorkUtil {
 
     /**
      * 获取widnows网卡的mac地址.
+     *
      * @return mac地址
      */
     public static String getWindowsAddressInfo() {
@@ -79,15 +81,15 @@ public class NetWorkUtil {
         BufferedReader bufferedReader = null;
         Process process = null;
 
-        StringBuilder sb = new StringBuilder() ;
+        StringBuilder sb = new StringBuilder();
         try {
             process = Runtime.getRuntime().exec("ipconfig /all");// windows下的命令，显示信息中包含有mac地址信息
             bufferedReader = new BufferedReader(new InputStreamReader(process
-                    .getInputStream(),"gbk"));
+                    .getInputStream(), "gbk"));
             String line = null;
             int index = -1;
             while ((line = bufferedReader.readLine()) != null) {
-                sb.append(line+"\r\n") ;
+                sb.append(line + "\r\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,7 +108,26 @@ public class NetWorkUtil {
         return sb.toString();
     }
 
+    public static String getHostNameByIp(String ip) {
+        String hostName = null ;
+        String[] ips = ip.split("\\.");
+        byte[] address = new byte[ips.length];
+        for (int i = 0; i < ips.length; i++) {
+            address[i] = (byte) Integer.parseInt(ips[i]);
+        }
+        InetAddress addr = null;
+        try {
+            addr = InetAddress.getByAddress(address);
+            hostName = addr.getHostName() ;
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return hostName;
+    }
 
-
+    public static void main(String[] args) {
+        String ip = "172.32.149.181" ;
+        System.out.println(NetWorkUtil.getHostNameByIp(ip));
+    }
 
 }
