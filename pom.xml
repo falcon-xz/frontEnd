@@ -75,5 +75,6 @@
         <module>spring</module>
         <module>shell</module>
         <module>util</module>
+        <module>metrics</module>
     </modules>
 </project>
