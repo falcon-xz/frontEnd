@@ -76,5 +76,6 @@
         <module>shell</module>
         <module>util</module>
         <module>metrics</module>
+        <module>redis</module>
     </modules>
 </project>
