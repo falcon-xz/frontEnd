@@ -28,7 +28,7 @@ public class StudentResource {
 
 	@Path("get")
 	@GET
-	@Produces(value = MediaType.APPLICATION_XML)
+	@Produces(value = MediaType.APPLICATION_JSON)
 	public Student getStudent1(@QueryParam("id") long id) {
 		return DataBase.get(id);
 	}

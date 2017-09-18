@@ -1,4 +1,4 @@
-package com.xz.rest.jetty.servlet;
+package com.xz.rest.jetty.noXML.servlet;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -9,15 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class MyServletNoXML extends HttpServlet {
+public class MyServlet1 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private String greeting="Hello World";
-    public MyServletNoXML(){}
-    public MyServletNoXML(String greeting)
+    public MyServlet1(){}
+    public MyServlet1(String greeting)
     {
         this.greeting=greeting;
     }
+
+    @Override
+    public void init() throws ServletException {
+        System.out.println(" init 1 ");
+        greeting = "fuck";
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	Map<String, String[]> map = request.getParameterMap() ;

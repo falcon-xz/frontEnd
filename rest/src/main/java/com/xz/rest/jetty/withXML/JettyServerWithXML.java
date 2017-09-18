@@ -1,6 +1,6 @@
-package com.xz.rest.jetty.server;
+package com.xz.rest.jetty.withXML;
 
-import com.xz.rest.jetty.config.JettyConfig;
+import com.xz.rest.jetty.noXML.config.JettyConfig;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 

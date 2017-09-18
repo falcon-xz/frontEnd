@@ -1,15 +1,10 @@
 package com.xz.shell.jetty;
 
-import com.xz.rest.jetty.filter.MyFilter;
-import com.xz.rest.jetty.servlet.MyServletNoXML;
-import com.xz.rest.jetty.servlet.http.TransationServlet;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.glassfish.jersey.servlet.ServletContainer;
 
 /**
  * falcon -- 2017/1/18.

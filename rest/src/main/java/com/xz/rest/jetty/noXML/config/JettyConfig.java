@@ -1,4 +1,4 @@
-package com.xz.rest.jetty.config;
+package com.xz.rest.jetty.noXML.config;
 
 import com.xz.common.utils.properties.PropertiesUtil;
 

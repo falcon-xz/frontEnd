@@ -1,4 +1,4 @@
-package com.xz.rest.jetty.servlet.http;
+package com.xz.rest.jetty.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

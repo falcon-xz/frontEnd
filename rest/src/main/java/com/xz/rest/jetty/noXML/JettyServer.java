@@ -1,16 +1,16 @@
-package com.xz.rest.jetty.server;
+package com.xz.rest.jetty.noXML;
 
-import com.xz.rest.jetty.config.JettyConfig;
+import com.xz.rest.jetty.noXML.config.JettyConfig;
 import com.xz.rest.jetty.filter.MyFilter;
-import com.xz.rest.jetty.servlet.MyServletNoXML;
-import com.xz.rest.jetty.servlet.http.TransationServlet;
+import com.xz.rest.jetty.noXML.handle.MyErrorHandle;
+import com.xz.rest.jetty.noXML.servlet.MyServlet1;
+import com.xz.rest.jetty.servlet.TransationServlet;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 /**
@@ -18,7 +18,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
  * @author xz
  *
  */
-public class JettyServerNoXML {
+public class JettyServer {
 	private JettyConfig config = new JettyConfig() ;
 	private final String CONTEXT_PATH = "/frontEnd";
 	private Server server = null;
@@ -32,8 +32,19 @@ public class JettyServerNoXML {
 				CONTEXT_PATH, ServletContextHandler.SECURITY
 						| ServletContextHandler.SESSIONS);
 
-		root.addFilter(new FilterHolder(new MyFilter()),"*",null) ;
-		root.addServlet(new ServletHolder(new MyServletNoXML()),"/MyServletNoXML.do");
+
+
+		//设置错误页面
+		root.setErrorHandler(new MyErrorHandle());
+
+		// filter
+		FilterHolder myFilter = new FilterHolder(new MyFilter());
+		root.addFilter(myFilter,"*",null) ;
+
+		//servlet
+		ServletHolder servlet1 = new ServletHolder(new MyServlet1());
+		servlet1.setInitOrder(1);
+		root.addServlet(servlet1,"/MyServlet1");
 		root.addServlet(new ServletHolder(new TransationServlet()),"/TransationServlet");
 
 		ServletHolder jersey = new ServletHolder(new ServletContainer());
@@ -61,7 +72,7 @@ public class JettyServerNoXML {
 		}
 	}
 	public static void main(String[] args)  {
-		JettyServerNoXML jettyServer = new JettyServerNoXML() ;
+		JettyServer jettyServer = new JettyServer() ;
 		try {
 			jettyServer.run();
 		} catch (Exception e) {

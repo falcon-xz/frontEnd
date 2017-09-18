@@ -18,7 +18,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>TransationServlet</servlet-name>
-    <servlet-class>com.xz.rest.jetty.servlet.http.TransationServlet</servlet-class>
+    <servlet-class>com.xz.rest.jetty.servlet.TransationServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
