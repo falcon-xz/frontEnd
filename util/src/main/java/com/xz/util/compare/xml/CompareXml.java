@@ -11,8 +11,9 @@ import java.util.Map;
 public class CompareXml {
 
     public static void main(String[] args) {
-        String path1 = "C:\\Users\\Administrator\\Desktop\\hbase-hue\\NCMP\\hbase-site.xml";
-        String path2 = "C:\\Users\\Administrator\\Desktop\\hbase-hue\\NMDBP\\hbase-site.xml";
+        String path = CompareXml.class.getClassLoader().getResource("").getPath();
+        String path1 = path+"1.xml";
+        String path2 = path+"2.xml";
 
 
         System.out.println(path1);

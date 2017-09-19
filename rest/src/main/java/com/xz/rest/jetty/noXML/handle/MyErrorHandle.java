@@ -28,7 +28,10 @@ public class MyErrorHandle extends ErrorHandler {
         Response jettyResponse = connection.getHttpChannel().getResponse() ;
         jettyResponse.setContentType(MediaType.TEXT_PLAIN);
         int status = jettyResponse.getStatus();
-        String msg = HttpStatus.getMessage(status);
+        String msg = jettyResponse.getReason();
+        if (msg==null){
+            msg = HttpStatus.getMessage(status);
+        }
         Map<String,Object> map = new LinkedHashMap<>() ;
         map.put("path",path) ;
         map.put("status",status) ;

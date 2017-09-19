@@ -19,52 +19,79 @@ public class StudentResource {
 	@Context
 	UriInfo uriInfo;
 
-	@Path("getAll")
+	@Path("/getAll")
 	@GET
 	@Produces(value = MediaType.APPLICATION_XML)
 	public List<Student> getAll() {
 		return DataBase.getAll();
 	}
 
-	@Path("get")
+	@Path("/get")
 	@GET
 	@Produces(value = MediaType.APPLICATION_JSON)
-	public Student getStudent1(@QueryParam("id") long id) {
+	public Student getStudent1(@QueryParam("id") Integer id) throws Exception{
+		if (id==null){
+			throw new Exception("参数id为null");
+		}
 		return DataBase.get(id);
 	}
 
 	@Path("/get/{id}")
 	@GET
 	@Produces(value = MediaType.APPLICATION_XML)
-	public Student getStudent2(@PathParam("id") long id) {
+	public Student getStudent2(@PathParam("id") int id) {
 		return DataBase.get(id);
 	}
 
-	@Path("add")
-	@POST
+	@Path("/put")
+	@PUT
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void add(@FormParam(value = "name") String name,
-			@FormParam(value = "age") int age,
-			@Context HttpServletRequest request,
-			@Context HttpServletResponse response) {
-		long id = DataBase.put(name, age);
-		URI responseUri = uriInfo.getBaseUriBuilder().path("student/get/" + id)
-				.build();
-		try {
-			response.sendRedirect(responseUri.getPath());
-		} catch (IOException e) {
-			e.printStackTrace();
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public int put(@FormParam(value = "name") String name,
+			@FormParam(value = "age") Integer age
+			) {
+		int id = DataBase.put(name, age);
+		return id ;
+	}
+
+	@Path("/puts")
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public String puts(Student[] students) {
+		StringBuffer sb = new StringBuffer() ;
+		for (int i = 0; i < students.length; i++) {
+			int id = DataBase.put(students[i].getName(), students[i].getAge());
+			sb.append(i).append("--") ;
 		}
+		return sb.toString() ;
+	}
+
+	@Path("/addAndShow")
+	@PUT
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public Student addAndShow(@FormParam(value = "name") String name,
+					@FormParam(value = "age") int age,
+					@Context HttpServletRequest request,
+					@Context HttpServletResponse response) {
+		int id = DataBase.put(name, age);
+		return this.getStudent2(id) ;
 	}
 
 	@DELETE
-	@Path("{id}")
-	public void delete(@PathParam("id") long id) {
-		System.out.println(DataBase.delete(id));
+	@Path("/delete/{id}")
+	@Produces(value = MediaType.APPLICATION_JSON)
+	public String delete(@PathParam("id") int id) {
+		boolean bo = DataBase.delete(id);
+		return bo+"" ;
 	}
 
-	@PUT
-	public void put(@QueryParam("name") String name, @QueryParam("age") int age) {
-		System.out.println(DataBase.put(name, age));
+	@POST
+	@Path("/post")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(value = MediaType.APPLICATION_XML)
+	public String post(@FormParam("id") int id,@FormParam("name") String name, @FormParam("age") int age) {
+		return DataBase.update(id,name,age) +"";
 	}
 }

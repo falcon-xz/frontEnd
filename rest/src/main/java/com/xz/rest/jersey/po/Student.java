@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Student {
 
-	private long id;
+	private int id;
 	private String name;
 	private int age;
 
@@ -13,17 +13,17 @@ public class Student {
 
 	}
 
-	public Student(long id, String name, int age) {
+	public Student(int id, String name, int age) {
 		this.id = id;
 		this.name = name;
 		this.age = age;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -47,7 +47,7 @@ public class Student {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("id:").append(id).append(",").append("name:").append(name)
-				.append(",").append("age").append(age);
+				.append(",").append("age:").append(age);
 		return sb.toString();
 	}
 

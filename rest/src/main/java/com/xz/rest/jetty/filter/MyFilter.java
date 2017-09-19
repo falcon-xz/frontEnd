@@ -16,9 +16,8 @@ public class MyFilter implements Filter{
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest)request ;
 		if (character==null){
-			character = "utf-8" ;
+			throw new ServletException("fuck") ;
 		}
-		System.out.println("filter:character--"+character);
 		httpServletRequest.setCharacterEncoding(character);
 		chain.doFilter(request, response);
 	}

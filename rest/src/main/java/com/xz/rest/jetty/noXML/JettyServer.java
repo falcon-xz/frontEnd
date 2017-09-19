@@ -32,14 +32,13 @@ public class JettyServer {
 				CONTEXT_PATH, ServletContextHandler.SECURITY
 						| ServletContextHandler.SESSIONS);
 
-
-
 		//设置错误页面
 		root.setErrorHandler(new MyErrorHandle());
 
 		// filter
 		FilterHolder myFilter = new FilterHolder(new MyFilter());
-		root.addFilter(myFilter,"*",null) ;
+		myFilter.setInitParameter("character","utf-8");
+		root.addFilter(myFilter,"/*",null) ;
 
 		//servlet
 		ServletHolder servlet1 = new ServletHolder(new MyServlet1());
