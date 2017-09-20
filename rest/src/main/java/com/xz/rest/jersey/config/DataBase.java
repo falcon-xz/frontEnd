@@ -9,10 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DataBase {
 	private static Map<Integer, Student> map;
-	private static AtomicInteger index = new AtomicInteger(0);
+	private static AtomicInteger index ;
 
 	static {
 		map = new ConcurrentHashMap<>();
+		index = new AtomicInteger(0);
 		for (int i = 0; i < 10; i++) {
 			int id = index.addAndGet(1) ;
 			Student s = new Student(id, "邢舟" + id, 10 + id) ;
@@ -44,7 +45,7 @@ public class DataBase {
 	}
 
 	public static List<Student> getAll() {
-		List<Student> list = new ArrayList<Student>();
+		List<Student> list = new ArrayList<>();
 		Iterator<Integer> it = map.keySet().iterator();
 		while (it.hasNext()) {
 			int key = it.next();

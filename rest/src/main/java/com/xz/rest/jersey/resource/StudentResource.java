@@ -3,6 +3,7 @@ package com.xz.rest.jersey.resource;
 import com.xz.rest.jersey.po.Student;
 import com.xz.rest.jersey.config.DataBase;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
@@ -29,9 +30,9 @@ public class StudentResource {
 	@Path("/get")
 	@GET
 	@Produces(value = MediaType.APPLICATION_JSON)
-	public Student getStudent1(@QueryParam("id") Integer id) throws Exception{
+	public Student getStudent1(@QueryParam("id") Integer id) throws ServletException{
 		if (id==null){
-			throw new Exception("参数id为null");
+			throw new ServletException("参数id为null");
 		}
 		return DataBase.get(id);
 	}
@@ -49,7 +50,10 @@ public class StudentResource {
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public int put(@FormParam(value = "name") String name,
 			@FormParam(value = "age") Integer age
-			) {
+			) throws ServletException {
+		if (name == null || name.equals("")){
+			throw new ServletException("name 没有");
+		}
 		int id = DataBase.put(name, age);
 		return id ;
 	}
@@ -62,7 +66,7 @@ public class StudentResource {
 		StringBuffer sb = new StringBuffer() ;
 		for (int i = 0; i < students.length; i++) {
 			int id = DataBase.put(students[i].getName(), students[i].getAge());
-			sb.append(i).append("--") ;
+			sb.append(id).append("--") ;
 		}
 		return sb.toString() ;
 	}

@@ -49,6 +49,7 @@ public abstract class Base {
             client = ClientBuilder.newClient();
             String path = "http://"+ jettyConfig.getHost()+":"+jettyConfig.getPort()+"/frontEnd/rest"+this.url;
             System.out.println(path);
+            //使用uri 防止转码 如：链接中的 ? 转码成 %3f
             URI uri = new URI(path);
             WebTarget target = client.target(uri);
             Invocation.Builder builder = target.request();

@@ -19,6 +19,9 @@ public class AuthorizationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest)servletRequest ;
         String header = httpServletRequest.getHeader("Authorization");
+        if (header==null || header.equals("")){
+            throw new IOException("need authentication ");
+        }
         String token = CoderUtils.getDecodeBase64(header);
         if ("ADMIN:KYLIN".equals(token)){
             filterChain.doFilter(servletRequest, servletResponse);

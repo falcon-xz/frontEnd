@@ -7,6 +7,8 @@ import org.eclipse.jetty.server.HttpConnection;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Response;
 import org.eclipse.jetty.server.handler.ErrorHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,7 @@ import java.util.Map;
  * Created by Administrator on 2017-9-18.
  */
 public class MyErrorHandle extends ErrorHandler {
+    private Logger logger = LoggerFactory.getLogger(MyErrorHandle.class);
     private final Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create() ;
 
     @Override
@@ -33,7 +36,9 @@ public class MyErrorHandle extends ErrorHandler {
         if (msg==null){
             msg = HttpStatus.getMessage(status);
         }
-        Throwable cause = (Throwable)request.getAttribute("javax.servlet.error.exception") ;
+        Object o = request.getAttribute("javax.servlet.error.exception") ;
+        logger.error(o.getClass().getName());
+        Throwable cause = (Throwable)o ;
         if (cause!=null){
             detail = cause.getMessage() ;
         }
