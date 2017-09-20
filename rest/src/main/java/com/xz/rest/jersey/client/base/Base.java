@@ -21,18 +21,23 @@ public abstract class Base {
     private String secret;
 
     public Base() {
-        secret = CoderUtils.getBase64("ADMIN:KYLIN");
+        secret = CoderUtils.getEncodeBase64("ADMIN:KYLIN");
     }
 
     public abstract String setUrl();
 
     protected void buildRequest(Invocation.Builder builder) {
-        builder.header("Authorization", "Basic " + this.secret);
+        builder.header("Authorization", this.secret);
     }
 
     protected abstract Response buildHTTP(Invocation.Builder builder);
 
     protected abstract void deal(Response response);
+
+    protected void exception(Response response){
+        String error = response.readEntity(String.class);
+        System.out.println(error);
+    }
 
 
     public void execute() {
@@ -49,7 +54,11 @@ public abstract class Base {
             Invocation.Builder builder = target.request();
             this.buildRequest(builder);
             response = this.buildHTTP(builder);
-            this.deal(response);
+            if (response.getStatus()==200){
+                this.deal(response);
+            }else{
+                this.exception(response);
+            }
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }finally {

@@ -1,5 +1,6 @@
 package com.xz.rest.jetty.noXML;
 
+import com.xz.rest.jetty.filter.AuthorizationFilter;
 import com.xz.rest.jetty.noXML.config.JettyConfig;
 import com.xz.rest.jetty.filter.MyFilter;
 import com.xz.rest.jetty.noXML.handle.MyErrorHandle;
@@ -39,6 +40,9 @@ public class JettyServer {
 		FilterHolder myFilter = new FilterHolder(new MyFilter());
 		myFilter.setInitParameter("character","utf-8");
 		root.addFilter(myFilter,"/*",null) ;
+
+		FilterHolder authorizationFilter = new FilterHolder(new AuthorizationFilter());
+		root.addFilter(authorizationFilter,"/rest/student/*",null) ;
 
 		//servlet
 		ServletHolder servlet1 = new ServletHolder(new MyServlet1());

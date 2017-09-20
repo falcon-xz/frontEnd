@@ -26,16 +26,22 @@ public class MyErrorHandle extends ErrorHandler {
         String path = request.getServletPath() ;
         HttpConnection connection = HttpConnection.getCurrentConnection() ;
         Response jettyResponse = connection.getHttpChannel().getResponse() ;
-        jettyResponse.setContentType(MediaType.TEXT_PLAIN);
+        jettyResponse.setContentType(MediaType.APPLICATION_JSON);
         int status = jettyResponse.getStatus();
         String msg = jettyResponse.getReason();
+        String detail = "";
         if (msg==null){
             msg = HttpStatus.getMessage(status);
+        }
+        Throwable cause = (Throwable)request.getAttribute("javax.servlet.error.exception") ;
+        if (cause!=null){
+            detail = cause.getMessage() ;
         }
         Map<String,Object> map = new LinkedHashMap<>() ;
         map.put("path",path) ;
         map.put("status",status) ;
         map.put("message",msg) ;
+        map.put("detail",detail) ;
         gson.toJson(map,response.getWriter());
     }
 }
