@@ -72,7 +72,6 @@
         <module>worm</module>
         <module>io</module>
         <module>other</module>
-        <module>spring</module>
         <module>shell</module>
         <module>util</module>
         <module>metrics</module>
