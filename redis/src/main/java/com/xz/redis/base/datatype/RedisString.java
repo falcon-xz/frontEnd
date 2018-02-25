@@ -60,5 +60,10 @@ public class RedisString {
         System.out.println(user2);
     }
 
+    @Test
+    public void transaction(){
+
+    }
+
 
 }
