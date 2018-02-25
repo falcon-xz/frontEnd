@@ -12,10 +12,14 @@
     <artifactId>rpc</artifactId>
     <properties>
         <netty-version>4.1.6.Final</netty-version>
-        <protostuff-version>1.0.12</protostuff-version>
         <thrift-version>0.9.3</thrift-version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.xz.newland</groupId>
+            <artifactId>util</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>com.xz.newland</groupId>
             <artifactId>common</artifactId>
@@ -30,23 +34,7 @@
         </dependency>
         <!-- netty end -->
 
-        <!-- Protostuff -->
-        <dependency>
-            <groupId>com.dyuproject.protostuff</groupId>
-            <artifactId>protostuff-core</artifactId>
-            <version>${protostuff-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dyuproject.protostuff</groupId>
-            <artifactId>protostuff-api</artifactId>
-            <version>${protostuff-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dyuproject.protostuff</groupId>
-            <artifactId>protostuff-runtime</artifactId>
-            <version>${protostuff-version}</version>
-        </dependency>
-        <!-- Protostuff -->
+
 
         <!-- thrift -->
         <dependency>

@@ -1,4 +1,4 @@
-package com.xz.rpc.baseknow.serializable.protostuff;
+package com.xz.util.protostuff;
 
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtobufIOUtil;
@@ -12,9 +12,10 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * falcon -- 2016/11/19.
+ * Created by THink on 2018/2/25.
  */
-public class ProtostuffUtil {
+public class ProtostuffUtils {
+
     public static <T> byte[] serialize(T obj) {
         if (obj == null) {
             throw new RuntimeException("序列化对象(" + obj + ")!");
@@ -93,5 +94,4 @@ public class ProtostuffUtil {
         }
         return result;
     }
-
 }

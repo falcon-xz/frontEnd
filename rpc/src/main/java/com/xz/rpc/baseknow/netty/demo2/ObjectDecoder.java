@@ -1,6 +1,6 @@
 package com.xz.rpc.baseknow.netty.demo2;
 
-import com.xz.rpc.baseknow.serializable.protostuff.ProtostuffUtil;
+import com.xz.util.protostuff.ProtostuffUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -31,7 +31,7 @@ public class ObjectDecoder extends ByteToMessageDecoder{
         byte[] data = new byte[dataLength];
         in.readBytes(data);
 
-        Object obj = ProtostuffUtil.deserialize(data, cz);
+        Object obj = ProtostuffUtils.deserialize(data, cz);
         list.add(obj);
     }
 }

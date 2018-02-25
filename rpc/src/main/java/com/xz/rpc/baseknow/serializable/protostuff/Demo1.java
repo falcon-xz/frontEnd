@@ -1,5 +1,7 @@
 package com.xz.rpc.baseknow.serializable.protostuff;
 
+import com.xz.util.protostuff.ProtostuffUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,7 +24,7 @@ public class Demo1 {
             file.createNewFile();
 
             FileOutputStream fos = new FileOutputStream(file) ;
-            byte[] bytes = ProtostuffUtil.serialize(transmission) ;
+            byte[] bytes = ProtostuffUtils.serialize(transmission) ;
             fos.write(bytes);
             fos.flush();
             fos.close();
@@ -34,7 +36,7 @@ public class Demo1 {
             System.out.println(file.length());
             fis.read(bytes);
             fis.close();
-            Transmission transmission1 = ProtostuffUtil.deserialize(bytes,Transmission.class) ;
+            Transmission transmission1 = ProtostuffUtils.deserialize(bytes,Transmission.class) ;
             System.out.println(transmission1.toString());
         } catch (IOException e) {
             e.printStackTrace();

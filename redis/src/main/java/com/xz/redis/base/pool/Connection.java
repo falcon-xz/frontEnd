@@ -1,4 +1,4 @@
-package com.xz.redis.pool;
+package com.xz.redis.base.pool;
 
 import com.xz.common.utils.properties.PropertiesUtil;
 import redis.clients.jedis.Jedis;
@@ -32,17 +32,30 @@ public class Connection {
     private static boolean getTestOnBorrow(){
         return Boolean.parseBoolean(config.getProperty("MAX_WAIT")) ;
     }
+    private static String getPassword(){
+        return config.getProperty("password", "1qaz!QAZ") ;
+    }
+
     static{
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(getMaxActive());
         config.setMaxIdle(getMaxIdle());
         config.setMaxWaitMillis(getMaxWait());
         config.setTestOnBorrow(getTestOnBorrow());
-        jedisPool = new JedisPool(config,getIp() , getPort());
+        jedisPool = new JedisPool(config,getIp() , getPort(),3000,getPassword());
     }
 
     public static Jedis getConnection(){
-        return jedisPool.getResource() ;
+        try {
+            if(jedisPool!=null){
+                return jedisPool.getResource() ;
+            }
+            return null ;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null ;
+        }
+
     }
 
 }

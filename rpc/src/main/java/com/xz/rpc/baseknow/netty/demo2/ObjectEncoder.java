@@ -1,6 +1,6 @@
 package com.xz.rpc.baseknow.netty.demo2;
 
-import com.xz.rpc.baseknow.serializable.protostuff.ProtostuffUtil;
+import com.xz.util.protostuff.ProtostuffUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -20,7 +20,7 @@ public class ObjectEncoder extends MessageToByteEncoder{
     protected void encode(ChannelHandlerContext channelHandlerContext, Object in, ByteBuf byteBuf) throws Exception {
         System.out.println("-----ObjectEncoder------"+in.getClass().getName());
         if (cz.isInstance(in)) {
-            byte[] data = ProtostuffUtil.serialize(in);
+            byte[] data = ProtostuffUtils.serialize(in);
             byteBuf.writeInt(data.length);
             byteBuf.writeBytes(data);
         }
