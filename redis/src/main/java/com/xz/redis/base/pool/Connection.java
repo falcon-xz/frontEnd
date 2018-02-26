@@ -45,7 +45,7 @@ public class Connection {
         jedisPool = new JedisPool(config,getIp() , getPort(),3000,getPassword());
     }
 
-    public static Jedis getConnection(){
+    public static Jedis getConnectionByPool(){
         try {
             if(jedisPool!=null){
                 return jedisPool.getResource() ;
@@ -56,6 +56,21 @@ public class Connection {
             return null ;
         }
 
+    }
+
+    public static Jedis getConnection(){
+        Jedis jedis = new Jedis(getIp(),getPort());
+        jedis.auth(getPassword()) ;
+        return  jedis;
+    }
+
+    /**
+     * redis 2.x 版本使用 #TODO
+     * @return
+     */
+    @Deprecated
+    public static Jedis getConnectionByShard(){
+        return  null;
     }
 
 }

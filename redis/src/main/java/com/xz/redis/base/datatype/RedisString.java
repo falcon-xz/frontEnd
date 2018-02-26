@@ -6,6 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Transaction;
+
+import java.util.List;
 
 /**
  * Created by THink on 2018/2/24.
@@ -16,13 +19,12 @@ public class RedisString {
 
     @Before
     public void before(){
-        jedis = Connection.getConnection() ;
+        jedis = Connection.getConnectionByPool() ;
         System.out.println(jedis.ping());
     }
     @After
     public void after(){
        jedis.close();
-
     }
 
     /**
@@ -42,8 +44,9 @@ public class RedisString {
          */
         String s = jedis.set("hello","world1","NX","EX",60*60*24);
         System.out.println("set返回值:"+s);
-        String ss = jedis.get("hello") ;
-        System.out.println("key-值:"+ss);
+        System.out.println("key-值:"+jedis.get("hello1"));
+        System.out.println("key-值:"+jedis.get("hello2"));
+        System.out.println("key-值:"+jedis.get("hello3"));
     }
 
     /**
@@ -60,10 +63,7 @@ public class RedisString {
         System.out.println(user2);
     }
 
-    @Test
-    public void transaction(){
 
-    }
 
 
 }
