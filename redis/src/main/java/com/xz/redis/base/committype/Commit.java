@@ -39,6 +39,7 @@ public class Commit {
     }
 
     /**
+     * 保证原子性
      * 事务
      *  watch：key
      *  multi：事务连接
@@ -69,6 +70,9 @@ public class Commit {
         jedis.unwatch();
     }
 
+    /**
+     * 不保证原子性 速度快
+     */
     @Test
     public void pipeline(){
         Pipeline pipeline = jedis.pipelined() ;

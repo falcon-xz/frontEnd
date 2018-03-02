@@ -1,4 +1,4 @@
-package com.xz.redis.base.datatype;
+package com.xz.redis.base.datatype.string;
 
 import com.xz.redis.base.pool.Connection;
 import redis.clients.jedis.Jedis;
