@@ -1,5 +1,6 @@
 package com.xz.redis.base.datatype.string;
 
+import com.xz.redis.base.datatype.po.User;
 import com.xz.redis.base.pool.Connection;
 import com.xz.util.protostuff.ProtostuffUtils;
 import org.junit.After;
@@ -48,7 +49,7 @@ public class RedisString {
      */
     @Test
     public void setBytes(){
-        User user = new User("xz","15","男") ;
+        User user = new User("1","xz","15","男") ;
         byte[] key = "user".getBytes() ;
         byte[] value = ProtostuffUtils.serialize(user) ;
         jedis.set(key,value) ;
