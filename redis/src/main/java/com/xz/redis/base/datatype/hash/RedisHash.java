@@ -31,7 +31,6 @@ public class RedisHash {
 
     /**
      * hset key field value
-     * hgetall 返回所有field value
      */
     @Test
     public void hset(){
@@ -41,7 +40,24 @@ public class RedisHash {
         jedis.hset(key,"age",user.getAge()) ;
         jedis.hset(key,"sex",user.getSex()) ;
 
-        System.out.println(jedis.hgetAll(key).toString());
+        System.out.println(jedis.hget(key,"name"));
+        System.out.println(jedis.hget(key,"name"));
+        System.out.println(jedis.hget(key,"name"));
+    }
+
+    /**
+     * 时间复杂度 0{n}
+     * hgetall 返回所有field value
+     */
+    @Test
+    public void hgetall(){
+        User user = new User("1","xz","11","男") ;
+        String key = "user:"+user.getId() ;
+        jedis.hset(key,"name",user.getName()) ;
+        jedis.hset(key,"age",user.getAge()) ;
+        jedis.hset(key,"sex",user.getSex()) ;
+
+        System.out.println(jedis.hgetAll(key));
     }
 
     /**

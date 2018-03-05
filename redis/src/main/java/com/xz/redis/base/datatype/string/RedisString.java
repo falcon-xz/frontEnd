@@ -62,7 +62,7 @@ public class RedisString {
      * mset : mset key1 value1 key2 value2
      */
     @Test
-    public void batchset(){
+    public void mset(){
         String key1 = "hello1" ;
         String key2 = "hello2" ;
         jedis.mset(key1,key1+key1,key2,key2+key2) ;
@@ -142,11 +142,13 @@ public class RedisString {
      *  获得部分字符串:getrange 注意中文 范围前后闭合
      */
     @Test
-    public void getrange(){
+    public void range(){
         String key = "hello" ;
         Pipeline pipeline = jedis.pipelined();
         pipeline.del(key) ;
         pipeline.set(key,"你是不是好") ;
+        pipeline.setrange(key,0,"艹") ;
+        pipeline.get(key);
         pipeline.getrange(key,6,11) ;
         System.out.println(pipeline.syncAndReturnAll());
     }

@@ -40,6 +40,8 @@ public class RedisList {
         pipeline.lrange(key,0,-1) ;
         System.out.println(pipeline.syncAndReturnAll());
     }
+
+
     /**
      * 相当于删除
      * lpop rpop 左侧插入 右侧插入
@@ -122,7 +124,7 @@ public class RedisList {
     }
 
     /**
-     * 设置某一位置的值
+     * 修改某一位置的值
      */
     @Test
     public void lset(){
@@ -199,4 +201,27 @@ public class RedisList {
         pipeline.objectEncoding(key) ;
         System.out.println(pipeline.syncAndReturnAll());
     }
+
+    /**
+     * lrange 0 -1 获取全部list
+     * 时间复杂度 O(s|n) s为start偏移量 n为start-end的范围
+     */
+    @Test
+    public void lrange(){
+        String key = "list" ;
+        Pipeline pipeline = jedis.pipelined() ;
+        pipeline.del(key) ;
+        pipeline.lpush(key,"1","2","3") ;
+        pipeline.lrange(key,0,-1) ;
+        System.out.println(pipeline.syncAndReturnAll());
+    }
+
+    /**
+     * 优化 lrange
+     */
+    @Test
+    public void scan(){
+        String key = "list" ;
+    }
+
 }
