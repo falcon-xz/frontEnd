@@ -1,5 +1,7 @@
 package com.xz.redis.base.datatype.string;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.xz.redis.base.datatype.po.User;
 import com.xz.redis.base.pool.Connection;
 import com.xz.util.protostuff.ProtostuffUtils;
@@ -8,6 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by THink on 2018/2/24.
@@ -167,5 +174,32 @@ public class RedisString {
         pipeline.set(key,"one string greater than 39 byte ,,,,,,,,one string greater than 39 byte ,,,,,,,,") ;
         pipeline.objectEncoding(key) ;
         System.out.println(pipeline.syncAndReturnAll());
+    }
+
+    /**
+     * 优化 key
+     */
+    @Test
+    public void scan(){
+        String cursor = "0" ;
+        ScanParams scanParams = new ScanParams() ;
+        scanParams.count(10) ;
+        scanParams.match("*") ;
+        int i = 0 ;
+        while (true){
+            ScanResult<String> scanResult = jedis.scan(cursor,scanParams) ;
+            List<String> result = scanResult.getResult() ;
+            i = result.size()+i ;
+            System.out.print("单次获取数量："+result.size()+",总数量："+i+"---");
+            for (String element:result) {
+                System.out.print(element+"--");
+            }
+            System.out.println("");
+            cursor = scanResult.getStringCursor() ;
+            if (cursor.equals("0")){
+                break;
+            }
+        }
+        System.out.println("end");
     }
 }

@@ -1,5 +1,7 @@
 package com.xz.redis.base.datatype.hash;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.xz.redis.base.datatype.po.User;
 import com.xz.redis.base.pool.Connection;
 import org.apache.commons.lang3.ArrayUtils;
@@ -8,8 +10,10 @@ import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -125,22 +129,6 @@ public class RedisHash {
         System.out.println(pipeline.syncAndReturnAll());
     }
 
-    /**
-     * hscan  TODO
-     *
-     */
-    @Test
-    public void hscan(){
-        User user = new User("1","xz","11","女") ;
-        String key = "user:"+user.getId() ;
-        jedis.hdel(key,"name","age","sex") ;
-        jedis.hmset(key,user.toMap()) ;
-        ScanResult<Map.Entry<String, String>> result = jedis.hscan(key,"2") ;
-        for (Map.Entry<String, String> map:result.getResult()) {
-            System.out.println(map);
-        }
-        System.out.println(result.getStringCursor());
-    }
 
     /**
      * ziplist hashtable
@@ -154,5 +142,40 @@ public class RedisHash {
         pipeline.hmset(key,user.toMap()) ;
         pipeline.objectEncoding(key);
         System.out.println(pipeline.syncAndReturnAll());
+    }
+
+    /**
+     * 优化 hgetall
+     */
+    @Test
+    public void hscan(){
+        String key = "hash:keyhscan" ;
+        if (!jedis.exists(key)){
+            Map<String,String> map = Maps.newHashMap() ;
+            for (int i = 0; i < 1000 ; i++) {
+                map.put(i+"",i+"--") ;
+            }
+            jedis.hmset(key,map) ;
+        }
+        String cursor = "0" ;
+        ScanParams scanParams = new ScanParams() ;
+        scanParams.count(10) ;
+        scanParams.match("*") ;
+        int i = 0 ;
+        while (true){
+            ScanResult<Map.Entry<String,String>> scanResult = jedis.hscan(key,cursor,scanParams) ;
+            List<Map.Entry<String,String>> result = scanResult.getResult() ;
+            i = result.size()+i ;
+            System.out.print("单次获取数量："+result.size()+",总数量："+i+"---");
+            for (Map.Entry<String,String> map:result) {
+                System.out.print(map.toString()+"--");
+            }
+            System.out.println("");
+            cursor = scanResult.getStringCursor() ;
+            if (cursor.equals("0")){
+                break;
+            }
+        }
+        System.out.println("end");
     }
 }

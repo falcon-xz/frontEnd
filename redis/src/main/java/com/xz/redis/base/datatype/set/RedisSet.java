@@ -1,11 +1,16 @@
 package com.xz.redis.base.datatype.set;
 
+import com.google.common.collect.Lists;
 import com.xz.redis.base.pool.Connection;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
+
+import java.util.List;
 
 /**
  * Created by THink on 2018/3/5.
@@ -176,7 +181,33 @@ public class RedisSet {
      */
     @Test
     public void sscan(){
-        String key = "set:key" ;
-        jedis.sscan(key,"") ;
+        String key = "set:keysscan" ;
+        if (!jedis.exists(key)){
+            List<String> list = Lists.newArrayListWithCapacity(1000) ;
+            for (int i = 0; i < 1000 ; i++) {
+                list.add(i+1+"") ;
+            }
+            jedis.sadd(key,list.toArray(new String[1000])) ;
+        }
+        String cursor = "0" ;
+        ScanParams scanParams = new ScanParams() ;
+        scanParams.count(10) ;
+        scanParams.match("*") ;
+        int i = 0 ;
+        while (true){
+            ScanResult<String> scanResult = jedis.sscan(key,cursor,scanParams) ;
+            List<String> result = scanResult.getResult() ;
+            i = result.size()+i ;
+            System.out.print("单次获取数量："+result.size()+",总数量："+i+"---");
+            for (String element:result) {
+                System.out.print(element+"--");
+            }
+            System.out.println("");
+            cursor = scanResult.getStringCursor() ;
+            if (cursor.equals("0")){
+                break;
+            }
+        }
+        System.out.println("end");
     }
 }

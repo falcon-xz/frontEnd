@@ -1,12 +1,13 @@
 package com.xz.redis.base.datatype.list;
 
+import com.google.common.collect.Lists;
 import com.xz.redis.base.pool.Connection;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import redis.clients.jedis.BinaryClient;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.*;
+
+import java.util.List;
 
 /**
  * Created by THink on 2018/3/4.
@@ -216,12 +217,5 @@ public class RedisList {
         System.out.println(pipeline.syncAndReturnAll());
     }
 
-    /**
-     * 优化 lrange
-     */
-    @Test
-    public void scan(){
-        String key = "list" ;
-    }
 
 }
