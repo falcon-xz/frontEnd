@@ -13,7 +13,7 @@ public class JoinTest implements Runnable {
     @Override
     public void run() {
         try {
-            Thread.currentThread().sleep(l);
+            Thread.sleep(l);
             System.out.println(Thread.currentThread().getName());
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -27,12 +27,12 @@ public class JoinTest implements Runnable {
         Thread t2 = new Thread(j2) ;
         t1.start();
         t2.start();
-        try {
+        /*try {
             t1.join();
             t2.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         System.out.println("end");
     }
 }
