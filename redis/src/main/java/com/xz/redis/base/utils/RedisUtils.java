@@ -5,6 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
+import redis.clients.util.Slowlog;
+
+import java.util.List;
 
 /**
  * Created by THink on 2018/3/3.
@@ -28,7 +31,11 @@ public class RedisUtils {
     }
 
     @Test
-    public void findBigKey(){
+    public void showLog(){
+        List<Slowlog> list = jedis.slowlogGet() ;
+        for (Slowlog slowlog:list) {
+            System.out.println(slowlog.toString());
+        }
     }
 
 
