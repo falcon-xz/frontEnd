@@ -190,11 +190,11 @@ public class RedisString {
             ScanResult<String> scanResult = jedis.scan(cursor,scanParams) ;
             List<String> result = scanResult.getResult() ;
             i = result.size()+i ;
-            System.out.print("单次获取数量："+result.size()+",总数量："+i+"---");
+            System.out.println("单次获取数量："+result.size()+",总数量："+i+"---");
             for (String element:result) {
-                System.out.print(element+"--");
+                String type = jedis.type(element) ;
+                System.out.println(element+"--"+type);
             }
-            System.out.println("");
             cursor = scanResult.getStringCursor() ;
             if (cursor.equals("0")){
                 break;
