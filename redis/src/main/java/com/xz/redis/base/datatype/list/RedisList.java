@@ -203,8 +203,7 @@ public class RedisList {
         System.out.println(pipeline.syncAndReturnAll());
     }
 
-    /**
-     * lrange 0 -1 获取全部list
+    /** lrange 0 -1 获取全部list
      * 时间复杂度 O(s|n) s为start偏移量 n为start-end的范围
      */
     @Test
