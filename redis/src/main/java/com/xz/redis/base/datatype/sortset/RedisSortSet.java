@@ -9,9 +9,7 @@ import org.junit.Test;
 import redis.clients.jedis.*;
 import redis.clients.jedis.params.sortedset.ZAddParams;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by THink on 2018/3/11.
@@ -149,6 +147,30 @@ public class RedisSortSet {
         pipeline.zincrby(key, 4d, "xz1");
         pipeline.zrange(key, 0, -1);
         System.out.println(pipeline.syncAndReturnAll());
+    }
+
+    /**
+     * topN
+     */
+    @Test
+    public void topN() {
+        String key = "zset:key";
+        Pipeline pipeline = jedis.pipelined();
+        pipeline.del(key);
+        Map<String, Double> map = new HashMap<>();
+        map.put("xz1", 4d);
+        map.put("xz2", 6d);
+        map.put("xz3", 2d);
+        pipeline.zadd(key, map);
+        pipeline.zincrby(key, 4d, "xz1");
+        Response<Set<Tuple>> response = pipeline.zrevrangeByScoreWithScores(key,Double.MAX_VALUE,0);
+        pipeline.sync();
+        Set<Tuple> set = response.get() ;
+        Iterator<Tuple> it = set.iterator() ;
+        while (it.hasNext()){
+            Tuple tuple = it.next() ;
+            System.out.println(tuple.getElement()+"--"+tuple.getScore());
+        }
     }
 
     /**
