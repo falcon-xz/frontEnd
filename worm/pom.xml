@@ -21,6 +21,11 @@
             <artifactId>common</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.xz.newland</groupId>
+            <artifactId>util</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>us.codecraft</groupId>
@@ -58,7 +63,6 @@
             <artifactId>jsoup</artifactId>
             <version>${jsoup-version}</version>
         </dependency>
-
 
     </dependencies>
 
