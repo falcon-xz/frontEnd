@@ -11,7 +11,7 @@
 
     <artifactId>worm</artifactId>
     <properties>
-        <webmagic-version>0.5.2</webmagic-version>
+        <webmagic-version>0.7.1</webmagic-version>
         <jsoup-version>1.7.2</jsoup-version>
     </properties>
 

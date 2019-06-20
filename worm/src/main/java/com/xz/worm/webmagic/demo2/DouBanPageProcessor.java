@@ -61,6 +61,7 @@ public class DouBanPageProcessor implements PageProcessor{
             Elements titleElement = elements.get(i).getElementsByTag("h1").select("span") ;
             String movie = elements.get(i).getElementsByClass("main-hd").select("a").get(1).text() ;
             System.out.println(threadName+"--"+movie+"--"+titleElement.text());
+            page.putField("movie",movie);
         }
     }
 
@@ -90,7 +91,9 @@ public class DouBanPageProcessor implements PageProcessor{
     }
 
     public static void main(String[] args) {
-            Spider.create(new DouBanPageProcessor()).addUrl("https://movie.douban.com/review/best/").thread(2).run();
+        Spider spider = Spider.create(new DouBanPageProcessor()).addUrl("https://movie.douban.com/review/best/");
+        spider.addPipeline(new DouBanPipline()) ;
+        spider.thread(3).run();
     }
 
 }

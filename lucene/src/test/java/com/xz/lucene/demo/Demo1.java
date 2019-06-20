@@ -64,7 +64,7 @@ public class Demo1 {
                 //文件的大小
                 long fileSize = FileUtils.sizeOf(file2);
                 //文件大小域
-                Field fileSizeField = new LongField("fileSize", fileSize, Field.Store.YES);
+                Field fileSizeField = new StoredField("fileSize", fileSize+"");
 
                 //文件路径
                 String filePath = file2.getPath();
@@ -158,7 +158,7 @@ public class Demo1 {
 
     /**
      * SortedNumericDocValuesField
-     */
+
     @Test
     public void testNumericRangeQuery() {
         try {
@@ -194,7 +194,7 @@ public class Demo1 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Test
     public void testBooleanQuery() {

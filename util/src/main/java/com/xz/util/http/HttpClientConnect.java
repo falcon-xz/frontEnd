@@ -11,6 +11,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -105,12 +106,17 @@ public class HttpClientConnect {
             case "POST":{
                 return httpPost() ;
             }
+            case "PUT":{
+                return httpPut() ;
+            }
             default: {
                 throw new Exception("协议不支持");
             }
         }
 
     }
+
+
 
     public String httpGet() {
         CloseableHttpClient httpClient = getHttpClient(urlStr);
@@ -186,13 +192,7 @@ public class HttpClientConnect {
             if (httpGet != null) {
                 httpGet.releaseConnection();
             }
-            if (httpClient!=null&& !(connectionType instanceof PoolHttp)){
-                try {
-                    httpClient.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            this.close(httpClient);
         }
         return result;
     }
@@ -237,17 +237,54 @@ public class HttpClientConnect {
             if (httpPost != null) {
                 httpPost.releaseConnection();
             }
-            if (httpClient!=null&& !(connectionType instanceof PoolHttp)){
-                try {
-                    httpClient.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            this.close(httpClient);
         }
         return result;
     }
 
+    private String httpPut() {
+        CloseableHttpClient httpClient = getHttpClient(urlStr);
+        CloseableHttpResponse response = null ;
+        String result = null;
+        HttpPut httpPut = null ;
+        try {
+            httpPut = new HttpPut(urlStr) ;
+            if (headerMap!=null && headerMap.size()!=0){
+                for (Map.Entry<String,String> entry:headerMap.entrySet()) {
+                    httpPut.setHeader(entry.getKey(), entry.getValue());
+                }
+            }
+            StringEntity entity = new StringEntity(data, "UTF-8");//设置StringEntity编码为utf-8
+            httpPut.setEntity(entity);
+            response = httpClient.execute(httpPut);
+            result = EntityUtils.toString(response.getEntity(), Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (response != null) {
+                try {
+                    response.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (httpPut != null) {
+                httpPut.releaseConnection();
+            }
+            this.close(httpClient);
+        }
+        return result;
+    }
+
+    private void close(CloseableHttpClient httpClient){
+        if (httpClient!=null&& !(connectionType instanceof PoolHttp)){
+            try {
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }

@@ -1,6 +1,8 @@
 package com.xz.lucene.analyzer;
 
+import com.sun.deploy.config.DefaultConfig;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
@@ -8,13 +10,17 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
-import org.apache.lucene.analysis.util.CharArraySet;
 import org.junit.Test;
+import org.wltea.analyzer.cfg.Configuration;
+import org.wltea.analyzer.core.IKSegmenter;
+import org.wltea.analyzer.dic.Dictionary;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Arrays;
 
 /**
  * Created by xz on 2018/12/14.
@@ -27,12 +33,13 @@ public class TestAnalyzer {
      */
     @Test
     public void TestStandardAnalyzer() {
+        String s = "用户名" ;
         Reader reader = new InputStreamReader(TestAnalyzer.class.getClassLoader().getResourceAsStream("black.txt"));
         Analyzer analyzer = null;
         TokenStream tokenStream = null;
         try {
             analyzer = new StandardAnalyzer(reader);
-            tokenStream = analyzer.tokenStream("", new StringReader(content));
+            tokenStream = analyzer.tokenStream("", new StringReader(s));
             //关键词的引用
             CharTermAttribute cta = tokenStream.addAttribute(CharTermAttribute.class);
             //偏移量的引用
