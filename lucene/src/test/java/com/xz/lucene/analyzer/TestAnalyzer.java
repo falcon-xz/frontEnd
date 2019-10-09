@@ -11,10 +11,6 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.junit.Test;
-import org.wltea.analyzer.cfg.Configuration;
-import org.wltea.analyzer.core.IKSegmenter;
-import org.wltea.analyzer.dic.Dictionary;
-import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -30,6 +30,7 @@ public class TestLock implements Runnable{
     public String testLock(){
         synchronized(o){
             lock.lock();
+            lock.tryLock()
             try {
                 System.out.println("--in--");
                 o.wait();

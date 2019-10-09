@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by THink on 2018/2/26.
  */
-public class Commit {
+public class Transactions {
     private Jedis jedis = null ;
 
     @Before

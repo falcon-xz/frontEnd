@@ -114,5 +114,7 @@
         <module>redis</module>
         <module>mongoDB</module>
         <module>lucene</module>
+        <module>jvm</module>
+        <module>rocketMQ</module>
     </modules>
 </project>
