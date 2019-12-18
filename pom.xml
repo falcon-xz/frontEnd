@@ -105,16 +105,13 @@
         <module>designMode</module>
         <module>rest</module>
         <module>common</module>
-        <module>worm</module>
         <module>io</module>
         <module>other</module>
         <module>shell</module>
         <module>util</module>
         <module>metrics</module>
         <module>redis</module>
-        <module>mongoDB</module>
+        <module>netty</module>
         <module>lucene</module>
-        <module>jvm</module>
-        <module>rocketMQ</module>
     </modules>
 </project>
