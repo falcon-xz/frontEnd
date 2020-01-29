@@ -18,19 +18,21 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ProtostuffUtils {
 
-    public static Map<Class<?>,Schema<?>> map = new ConcurrentHashMap<>() ;
+    private static Map<Class<?>,Schema<?>> map = new ConcurrentHashMap<>() ;
 
     private static <T> Schema<T> getSchema(Class<T> cz){
         if (!map.containsKey(cz)){
             Schema<T> schema = RuntimeSchema.getSchema(cz);
             map.put(cz,schema) ;
         }
-        return (Schema<T>)map.get(cz) ;
+        @SuppressWarnings("unchecked")
+        Schema<T> schema = (Schema<T>)map.get(cz) ;
+        return schema ;
     }
 
     public static <T> byte[] serialize(T obj) {
         if (obj == null) {
-            throw new RuntimeException("序列化对象(" + obj + ")!");
+            throw new RuntimeException("序列化对象( null )!");
         }
         @SuppressWarnings("unchecked")
         Schema<T> schema = getSchema((Class<T>)obj.getClass()) ;
@@ -65,7 +67,7 @@ public class ProtostuffUtils {
 
     public static <T> byte[] serializeList(List<T> objList) {
         if (objList == null || objList.isEmpty()) {
-            throw new RuntimeException("序列化对象列表(" + objList + ")参数异常!");
+            throw new RuntimeException("序列化对象列表无数据!");
         }
         @SuppressWarnings("unchecked")
         Schema<T> schema = getSchema((Class<T>)objList.get(0).getClass()) ;
@@ -94,7 +96,7 @@ public class ProtostuffUtils {
 
     public static <T> List<T> deserializeList(byte[] paramArrayOfByte, Class<T> targetClass) {
         if (paramArrayOfByte == null || paramArrayOfByte.length == 0) {
-            throw new RuntimeException("反序列化对象发生异常,byte序列为空!");
+            throw new RuntimeException("反序列化对象 null !");
         }
 
         Schema<T> schema = getSchema(targetClass) ;
