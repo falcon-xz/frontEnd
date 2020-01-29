@@ -10,18 +10,30 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by THink on 2018/2/25.
  */
 public class ProtostuffUtils {
 
+    public static Map<Class<?>,Schema<?>> map = new ConcurrentHashMap<>() ;
+
+    private static <T> Schema<T> getSchema(Class<T> cz){
+        if (!map.containsKey(cz)){
+            Schema<T> schema = RuntimeSchema.getSchema(cz);
+            map.put(cz,schema) ;
+        }
+        return (Schema<T>)map.get(cz) ;
+    }
+
     public static <T> byte[] serialize(T obj) {
         if (obj == null) {
             throw new RuntimeException("序列化对象(" + obj + ")!");
         }
         @SuppressWarnings("unchecked")
-        Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema(obj.getClass());
+        Schema<T> schema = getSchema((Class<T>)obj.getClass()) ;
         LinkedBuffer buffer = LinkedBuffer.allocate(1024 * 1024);
         byte[] protostuff = null;
         try {
@@ -46,7 +58,7 @@ public class ProtostuffUtils {
         } catch (IllegalAccessException e) {
             throw new RuntimeException("默认构造器 私有!", e);
         }
-        Schema<T> schema = RuntimeSchema.getSchema(targetClass);
+        Schema<T> schema = getSchema(targetClass) ;
         ProtostuffIOUtil.mergeFrom(paramArrayOfByte, instance, schema);
         return instance;
     }
@@ -56,7 +68,7 @@ public class ProtostuffUtils {
             throw new RuntimeException("序列化对象列表(" + objList + ")参数异常!");
         }
         @SuppressWarnings("unchecked")
-        Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema(objList.get(0).getClass());
+        Schema<T> schema = getSchema((Class<T>)objList.get(0).getClass()) ;
         LinkedBuffer buffer = LinkedBuffer.allocate(1024 * 1024);
         byte[] protostuff = null;
         ByteArrayOutputStream bos = null;
@@ -85,7 +97,7 @@ public class ProtostuffUtils {
             throw new RuntimeException("反序列化对象发生异常,byte序列为空!");
         }
 
-        Schema<T> schema = RuntimeSchema.getSchema(targetClass);
+        Schema<T> schema = getSchema(targetClass) ;
         List<T> result = null;
         try {
             result = ProtobufIOUtil.parseListFrom(new ByteArrayInputStream(paramArrayOfByte), schema);
