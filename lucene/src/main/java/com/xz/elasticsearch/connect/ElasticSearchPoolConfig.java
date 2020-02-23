@@ -15,14 +15,18 @@ import java.util.regex.Pattern;
 public class ElasticSearchPoolConfig extends GenericObjectPoolConfig<RestHighLevelClient> {
     private static Pattern fenPattern = Pattern.compile(";") ;
     private static Pattern maoPattern = Pattern.compile(":") ;
-    private String clusterName;
     private String address ;
-    private List<HttpHost> list ;
+    private boolean authentication ;
+    private String username ;
+    private String password ;
+    private HttpHost[] httpHosts ;
 
-    public ElasticSearchPoolConfig(String clusterName, String address) {
-        this.clusterName = clusterName;
-        this.address = address;
-        list = new ArrayList<>() ;
+    public ElasticSearchPoolConfig(String hosts, boolean authentication, String username, String password) {
+        this.address = hosts;
+        this.authentication = authentication;
+        this.username = username;
+        this.password = password;
+        List<HttpHost> list = new ArrayList<>() ;
         String[] strings = fenPattern.split(address) ;
         for (String hostPost:strings) {
             String[] s = maoPattern.split(hostPost) ;
@@ -35,13 +39,22 @@ public class ElasticSearchPoolConfig extends GenericObjectPoolConfig<RestHighLev
             }
             list.add(httpHost) ;
         }
+        httpHosts = list.toArray(new HttpHost[list.size()]);
     }
 
-    public String getClusterName() {
-        return clusterName;
+    public HttpHost[] getHttpHosts() {
+        return httpHosts;
     }
 
-    public List<HttpHost> getList() {
-        return list;
+    public boolean isAuthentication() {
+        return authentication;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

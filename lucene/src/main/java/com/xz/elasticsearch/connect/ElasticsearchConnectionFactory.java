@@ -15,20 +15,10 @@ import java.io.IOException;
  * Created by xz on 2018/12/28.
  */
 public class ElasticsearchConnectionFactory implements PooledObjectFactory<RestHighLevelClient>{
-    private ElasticSearchPoolConfig elasticSearchPoolConfig;
-
-    public ElasticsearchConnectionFactory(ElasticSearchPoolConfig elasticSearchPoolConfig) {
-        this.elasticSearchPoolConfig = elasticSearchPoolConfig;
-    }
-
-    public void setElasticSearchPoolConfig(ElasticSearchPoolConfig elasticSearchPoolConfig) {
-        this.elasticSearchPoolConfig = elasticSearchPoolConfig;
-    }
 
     @Override
     public PooledObject<RestHighLevelClient> makeObject() throws Exception {
-        RestClientBuilder restClientBuilder = RestClient.builder(elasticSearchPoolConfig.getList().toArray(new HttpHost[elasticSearchPoolConfig.getList().size()])) ;
-        RestHighLevelClient restHighLevelClient = new RestHighLevelClient(restClientBuilder) ;
+        RestHighLevelClient restHighLevelClient = ElasticsearchConnection.getConnection() ;
         return new DefaultPooledObject<>(restHighLevelClient);
     }
 
@@ -39,7 +29,6 @@ public class ElasticsearchConnectionFactory implements PooledObjectFactory<RestH
 
     @Override
     public boolean validateObject(PooledObject<RestHighLevelClient> pooledObject) {
-
         try {
             return pooledObject.getObject().ping(RequestOptions.DEFAULT);
         } catch (IOException e) {

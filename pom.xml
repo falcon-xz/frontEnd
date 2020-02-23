@@ -113,5 +113,6 @@
         <module>redis</module>
         <module>netty</module>
         <module>lucene</module>
+        <module>web3j</module>
     </modules>
 </project>

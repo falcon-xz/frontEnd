@@ -5,7 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -35,6 +37,19 @@ public class ProtostuffUtilsTest {
         byte[] bytes = ProtostuffUtils.serialize(ret) ;
         Ret ret2 = ProtostuffUtils.deserialize(bytes,Ret.class) ;
         System.out.println(ret2);
+    }
+
+    /**
+     * map 需要用封装对象包裹
+     * @throws Exception
+     */
+    @Test
+    public void serializeMap() throws Exception {
+        Map<String,Ret> map = new HashMap<>() ;
+        map.put("1",ret);
+        byte[] bytes = ProtostuffUtils.serialize(map) ;
+        Map<String,Ret> map2 = ProtostuffUtils.deserialize(bytes,Map.class) ;
+        System.out.println(map2.get("1"));
     }
 
 
