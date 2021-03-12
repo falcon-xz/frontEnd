@@ -12,7 +12,7 @@
     <artifactId>rpc</artifactId>
     <properties>
         <netty-version>4.1.6.Final</netty-version>
-        <thrift-version>0.9.3</thrift-version>
+        <thrift-version>0.14.0</thrift-version>
     </properties>
     <dependencies>
         <dependency>
