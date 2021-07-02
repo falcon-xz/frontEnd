@@ -12,7 +12,7 @@
     <artifactId>lucene</artifactId>
     <properties>
         <lucene.version>7.5.0</lucene.version>
-        <elasticsearch.version>6.5.4</elasticsearch.version>
+        <elasticsearch.version>6.8.15</elasticsearch.version>
     </properties>
     <dependencies>
         <dependency>
