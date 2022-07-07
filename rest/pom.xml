@@ -13,7 +13,7 @@
     <properties>
         <jersey.version>2.25</jersey.version>
         <!-- 7.6.7.v20120910-->
-        <jetty-version>9.3.6.v20151106</jetty-version>
+        <jetty-version>9.4.48.v20220622</jetty-version>
     </properties>
     <dependencies>
         <dependency>
